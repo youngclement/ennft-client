@@ -18,9 +18,9 @@ import { LoadingProvider } from '@/components/loading-provider';
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: 'InquireA - Ask, Answer & Earn',
+  title: 'SolanaLearn - Master Solana Development',
   description:
-    'A blockchain-powered Q&A platform where knowledge meets rewards',
+    'Master Solana development through interactive courses, earn NFTs for completing challenges, and practice with real test cases',
   icons: {
     icon: '/imgs/logo.png',
   },

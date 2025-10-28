@@ -185,78 +185,80 @@ export default function ChallengesPage() {
             </Card>
 
             {/* Challenges Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 items-stretch">
                 {filteredChallenges.map((challenge) => (
-                    <Card key={challenge.id} className="overflow-hidden hover:shadow-lg transition-all duration-300 group">
-                        <div className="aspect-square relative overflow-hidden bg-gradient-to-br from-primary/5 to-primary/10">
-                            <div className="absolute inset-0 flex items-center justify-center">
-                                <div className="w-24 h-24 rounded-full bg-white/10 backdrop-blur-sm flex items-center justify-center">
-                                    <Target className="h-12 w-12 text-primary" />
+                    <Link key={challenge.id} href={`/elearning/challenges/${challenge.id}`}>
+                        <Card className="overflow-hidden hover:shadow-lg hover:shadow-primary/10 transition-all duration-300 group cursor-pointer border-2 hover:border-primary/20 h-full flex flex-col">
+                            <div className="aspect-square relative overflow-hidden bg-gradient-to-br from-primary/5 to-primary/10">
+                                <div className="absolute inset-0 flex items-center justify-center">
+                                    <div className="w-24 h-24 rounded-full bg-white/10 backdrop-blur-sm flex items-center justify-center">
+                                        <Target className="h-12 w-12 text-primary" />
+                                    </div>
+                                </div>
+
+                                {/* Difficulty Badge */}
+                                <div className="absolute top-4 right-4">
+                                    <div className={`w-3 h-3 rounded-full ${getDifficultyColor(challenge.difficulty)}`} />
+                                </div>
+
+                                {/* Level Badge */}
+                                <div className="absolute top-4 left-4">
+                                    <Badge className={`${getLevelColor(challenge.level)} text-white border-0`}>
+                                        {challenge.level}
+                                    </Badge>
+                                </div>
+
+                                {/* Click Indicator */}
+                                <div className="absolute bottom-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                    <div className="w-6 h-6 bg-primary/90 rounded-full flex items-center justify-center">
+                                        <ChevronRight className="h-3 w-3 text-white" />
+                                    </div>
                                 </div>
                             </div>
 
-                            {/* Difficulty Badge */}
-                            <div className="absolute top-4 right-4">
-                                <div className={`w-3 h-3 rounded-full ${getDifficultyColor(challenge.difficulty)}`} />
-                            </div>
+                            <div className="p-6">
+                                <div className="flex items-start justify-between mb-2">
+                                    <Badge className="text-xs border-border">
+                                        {challenge.category}
+                                    </Badge>
+                                    <div className="flex items-center gap-1 text-sm text-muted-foreground">
+                                        <Clock className="h-3 w-3" />
+                                        {challenge.estimatedTime}m
+                                    </div>
+                                </div>
 
-                            {/* Level Badge */}
-                            <div className="absolute top-4 left-4">
-                                <Badge className={`${getLevelColor(challenge.level)} text-white border-0`}>
-                                    {challenge.level}
-                                </Badge>
-                            </div>
-                        </div>
+                                <h3 className="font-semibold text-lg mb-2 line-clamp-1">
+                                    {challenge.title}
+                                </h3>
 
-                        <div className="p-6">
-                            <div className="flex items-start justify-between mb-2">
-                                <Badge variant="outline" className="text-xs">
-                                    {challenge.category}
-                                </Badge>
-                                <div className="flex items-center gap-1 text-sm text-muted-foreground">
-                                    <Clock className="h-3 w-3" />
-                                    {challenge.estimatedTime}m
+                                <p className="text-sm text-muted-foreground mb-3 line-clamp-2">
+                                    {challenge.subtitle}
+                                </p>
+
+                                <div className="flex items-center justify-between mb-4">
+                                    <div className="flex items-center gap-1">
+                                        <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
+                                        <span className="text-sm font-medium">{challenge.completionRate}%</span>
+                                        <span className="text-xs text-muted-foreground">completed</span>
+                                    </div>
+                                </div>
+
+                                <div className="flex gap-2">
+                                    <Button className="flex-1 bg-white text-black border border-gray-300 hover:bg-gray-50 text-sm px-3 py-2" asChild>
+                                        <Link href={challenge.documentationUrl}>
+                                            <BookOpen className="h-4 w-4 mr-2" />
+                                            Docs
+                                        </Link>
+                                    </Button>
+
+                                    <Button className="flex-1 bg-green-500 hover:bg-green-600 text-white border border-green-500 text-sm px-3 py-2">
+                                        <ChevronRight className="h-4 w-4 mr-2" />
+                                        Start Challenge
+                                    </Button>
                                 </div>
                             </div>
-
-                            <h3 className="font-semibold text-lg mb-2 line-clamp-1">
-                                {challenge.title}
-                            </h3>
-
-                            <p className="text-sm text-muted-foreground mb-3 line-clamp-2">
-                                {challenge.subtitle}
-                            </p>
-
-                            <div className="flex items-center justify-between mb-4">
-                                <div className="flex items-center gap-1">
-                                    <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
-                                    <span className="text-sm font-medium">{challenge.completionRate}%</span>
-                                    <span className="text-xs text-muted-foreground">completed</span>
-                                </div>
-                            </div>
-
-                            <div className="flex gap-2">
-                                <Button
-                                    variant="outline"
-                                    size="sm"
-                                    className="flex-1"
-                                    asChild
-                                >
-                                    <Link href={challenge.documentationUrl}>
-                                        <BookOpen className="h-4 w-4 mr-2" />
-                                        Docs
-                                    </Link>
-                                </Button>
-
-                                <Button size="sm" className="flex-1" asChild>
-                                    <Link href={challenge.challengeUrl}>
-                                        Take Challenge
-                                        <ChevronRight className="h-4 w-4 ml-2" />
-                                    </Link>
-                                </Button>
-                            </div>
-                        </div>
-                    </Card>
+                        </Card>
+                    </Link>
                 ))}
             </div>
 

@@ -121,20 +121,20 @@ function FAQItem({ question, answer, index }: FAQItemProps) {
 function Faq02() {
     const faqs: Omit<FAQItemProps, "index">[] = [
         {
-            question: "What is Inquire?",
-            answer: "Inquire is a knowledge-sharing platform where users can ask questions, provide answers, and learn from a community of experts. Our platform focuses on delivering high-quality answers and connecting people with knowledge they need.",
+            question: "What is SolanaLearn?",
+            answer: "SolanaLearn is a comprehensive Solana development learning platform where users can take interactive courses, complete coding challenges, earn NFTs for achievements, and practice with real test cases. Our platform focuses on hands-on blockchain development learning.",
         },
         {
             question: "How does the leaderboard work?",
-            answer: "Our leaderboard tracks user contributions and engagement. Users earn points by asking thoughtful questions, providing helpful answers, receiving upvotes, and participating constructively in discussions. The most active and helpful users rise to the top of the leaderboard.",
+            answer: "Our leaderboard tracks user achievements and learning progress. Users earn points by completing courses, solving challenges successfully, earning NFTs, and helping other learners. The most dedicated and skilled developers rise to the top of the leaderboard.",
         },
         {
-            question: "How do tags work on Inquire?",
-            answer: "Tags help categorize questions and make them more discoverable. When asking a question, you can add relevant tags to help it reach the right experts. You can also browse questions by tags to find topics that interest you or match your expertise.",
+            question: "How do tags work on SolanaLearn?",
+            answer: "Tags help categorize courses and challenges by technology and difficulty level. You can browse content by tags like 'Rust', 'Anchor', 'DeFi', 'NFTs' to find learning materials that match your interests and skill level.",
         },
         {
             question: "How can I improve my user profile?",
-            answer: "To improve your profile, focus on asking clear, well-researched questions and providing thoughtful, comprehensive answers. Engage respectfully with other users, fill out your profile information, and consistently participate in topics where you have expertise or interest.",
+            answer: "To improve your profile, complete courses and challenges successfully, earn NFTs, and help other learners. Fill out your profile information, showcase your completed projects, and consistently participate in the learning community to demonstrate your Solana development skills.",
         },
     ];
 
@@ -151,7 +151,7 @@ function Faq02() {
                         Frequently Asked Questions
                     </h2>
                     <p className="text-sm text-gray-600 dark:text-gray-400">
-                        Everything you need to know about using Inquire
+                        Everything you need to know about using SolanaLearn
                     </p>
                 </motion.div>
 

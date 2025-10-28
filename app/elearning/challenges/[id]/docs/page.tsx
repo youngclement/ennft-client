@@ -100,8 +100,8 @@ export default function ChallengeDocumentationPage() {
                                         <h2 className="text-2xl font-bold mb-2">{challenge.title}</h2>
                                         <p className="text-muted-foreground text-lg">{challenge.subtitle}</p>
                                         <div className="flex items-center gap-4 mt-4">
-                                            <Badge variant="outline">{challenge.category}</Badge>
-                                            <Badge variant="secondary">{challenge.level}</Badge>
+                                            <Badge className="border-border">{challenge.category}</Badge>
+                                            <Badge className="bg-secondary text-secondary-foreground">{challenge.level}</Badge>
                                             <div className="flex items-center gap-1 text-sm text-muted-foreground">
                                                 <span>Difficulty:</span>
                                                 {Array.from({ length: challenge.difficulty }).map((_, i) => (

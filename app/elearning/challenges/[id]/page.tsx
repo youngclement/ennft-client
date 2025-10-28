@@ -179,106 +179,110 @@ export default function ChallengeDetailPage() {
 
             {/* Content */}
             <div className="container mx-auto px-4 py-8">
-                <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <div className="flex flex-col lg:flex-row gap-8">
                     {/* Main Content */}
-                    <div className="lg:col-span-2">
-                        <Tabs defaultValue="overview" className="w-full">
-                            <TabsList className="w-full">
-                                <TabsTrigger value="overview">Overview</TabsTrigger>
-                                <TabsTrigger value="objectives">Objectives</TabsTrigger>
-                                <TabsTrigger value="requirements">Requirements</TabsTrigger>
-                            </TabsList>
+                    <div className="flex-1 lg:flex-[2] w-full">
+                        <div className="h-[500px] overflow-hidden w-full">
+                            <Tabs defaultValue="overview" className="w-full h-full flex flex-col">
+                                <TabsList className="w-full flex-shrink-0">
+                                    <TabsTrigger value="overview">Overview</TabsTrigger>
+                                    <TabsTrigger value="objectives">Objectives</TabsTrigger>
+                                    <TabsTrigger value="requirements">Requirements</TabsTrigger>
+                                </TabsList>
 
-                            <TabsContent value="overview" className="space-y-6">
-                                <Card className="p-6">
-                                    <h3 className="text-xl font-semibold mb-4">Challenge Overview</h3>
-                                    <div className="prose prose-gray dark:prose-invert max-w-none">
-                                        <p className="text-muted-foreground leading-relaxed">
-                                            {challenge.description}
-                                        </p>
+                                <div className="flex-1 overflow-y-auto w-full">
+                                    <TabsContent value="overview" className="space-y-6 h-full">
+                                        <Card className="p-6">
+                                            <h3 className="text-xl font-semibold mb-4">Challenge Overview</h3>
+                                            <div className="prose prose-gray dark:prose-invert max-w-none">
+                                                <p className="text-muted-foreground leading-relaxed">
+                                                    {challenge.description}
+                                                </p>
 
-                                        <h4 className="text-lg font-semibold mt-6 mb-3">What you'll build</h4>
-                                        <p className="text-muted-foreground">
-                                            This challenge will guide you through building a {challenge.title.toLowerCase()}.
-                                            You'll implement the core functionality while learning best practices and security considerations.
-                                        </p>
-                                    </div>
-                                </Card>
-
-                                <Card className="p-6">
-                                    <h3 className="text-xl font-semibold mb-4">Challenge Structure</h3>
-                                    <div className="space-y-4">
-                                        <div className="flex items-start gap-4">
-                                            <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0 mt-0.5">
-                                                <span className="text-sm font-semibold text-primary">1</span>
-                                            </div>
-                                            <div>
-                                                <h4 className="font-semibold">Read Documentation</h4>
-                                                <p className="text-sm text-muted-foreground">
-                                                    Start by reading the comprehensive documentation that explains the concepts and requirements.
+                                                <h4 className="text-lg font-semibold mt-6 mb-3">What you'll build</h4>
+                                                <p className="text-muted-foreground">
+                                                    This challenge will guide you through building a {challenge.title.toLowerCase()}.
+                                                    You'll implement the core functionality while learning best practices and security considerations.
                                                 </p>
                                             </div>
-                                        </div>
+                                        </Card>
 
-                                        <div className="flex items-start gap-4">
-                                            <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0 mt-0.5">
-                                                <span className="text-sm font-semibold text-primary">2</span>
-                                            </div>
-                                            <div>
-                                                <h4 className="font-semibold">Implement Solution</h4>
-                                                <p className="text-sm text-muted-foreground">
-                                                    Write the smart contract code following the specifications and best practices outlined.
-                                                </p>
-                                            </div>
-                                        </div>
+                                        <Card className="p-6">
+                                            <h3 className="text-xl font-semibold mb-4">Challenge Structure</h3>
+                                            <div className="space-y-4">
+                                                <div className="flex items-start gap-4">
+                                                    <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0 mt-0.5">
+                                                        <span className="text-sm font-semibold text-primary">1</span>
+                                                    </div>
+                                                    <div>
+                                                        <h4 className="font-semibold">Read Documentation</h4>
+                                                        <p className="text-sm text-muted-foreground">
+                                                            Start by reading the comprehensive documentation that explains the concepts and requirements.
+                                                        </p>
+                                                    </div>
+                                                </div>
 
-                                        <div className="flex items-start gap-4">
-                                            <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0 mt-0.5">
-                                                <span className="text-sm font-semibold text-primary">3</span>
-                                            </div>
-                                            <div>
-                                                <h4 className="font-semibold">Test & Deploy</h4>
-                                                <p className="text-sm text-muted-foreground">
-                                                    Test your implementation thoroughly and deploy it to see the results.
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </Card>
-                            </TabsContent>
+                                                <div className="flex items-start gap-4">
+                                                    <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0 mt-0.5">
+                                                        <span className="text-sm font-semibold text-primary">2</span>
+                                                    </div>
+                                                    <div>
+                                                        <h4 className="font-semibold">Implement Solution</h4>
+                                                        <p className="text-sm text-muted-foreground">
+                                                            Write the smart contract code following the specifications and best practices outlined.
+                                                        </p>
+                                                    </div>
+                                                </div>
 
-                            <TabsContent value="objectives" className="space-y-6">
-                                <Card className="p-6">
-                                    <h3 className="text-xl font-semibold mb-4">Learning Objectives</h3>
-                                    <div className="space-y-3">
-                                        {challenge.learningObjectives.map((objective, index) => (
-                                            <div key={index} className="flex items-start gap-3">
-                                                <CheckCircle className="h-5 w-5 text-green-500 mt-0.5 flex-shrink-0" />
-                                                <span>{objective}</span>
+                                                <div className="flex items-start gap-4">
+                                                    <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0 mt-0.5">
+                                                        <span className="text-sm font-semibold text-primary">3</span>
+                                                    </div>
+                                                    <div>
+                                                        <h4 className="font-semibold">Test & Deploy</h4>
+                                                        <p className="text-sm text-muted-foreground">
+                                                            Test your implementation thoroughly and deploy it to see the results.
+                                                        </p>
+                                                    </div>
+                                                </div>
                                             </div>
-                                        ))}
-                                    </div>
-                                </Card>
-                            </TabsContent>
+                                        </Card>
+                                    </TabsContent>
 
-                            <TabsContent value="requirements" className="space-y-6">
-                                <Card className="p-6">
-                                    <h3 className="text-xl font-semibold mb-4">Prerequisites</h3>
-                                    <div className="space-y-3">
-                                        {challenge.prerequisites.map((prereq, index) => (
-                                            <div key={index} className="flex items-start gap-3">
-                                                <div className="w-2 h-2 bg-primary rounded-full mt-2 flex-shrink-0" />
-                                                <span>{prereq}</span>
+                                    <TabsContent value="objectives" className="space-y-6 h-full">
+                                        <Card className="p-6">
+                                            <h3 className="text-xl font-semibold mb-4">Learning Objectives</h3>
+                                            <div className="space-y-3">
+                                                {challenge.learningObjectives.map((objective, index) => (
+                                                    <div key={index} className="flex items-start gap-3">
+                                                        <CheckCircle className="h-5 w-5 text-green-500 mt-0.5 flex-shrink-0" />
+                                                        <span>{objective}</span>
+                                                    </div>
+                                                ))}
                                             </div>
-                                        ))}
-                                    </div>
-                                </Card>
-                            </TabsContent>
-                        </Tabs>
+                                        </Card>
+                                    </TabsContent>
+
+                                    <TabsContent value="requirements" className="space-y-6 h-full">
+                                        <Card className="p-6">
+                                            <h3 className="text-xl font-semibold mb-4">Prerequisites</h3>
+                                            <div className="space-y-3">
+                                                {challenge.prerequisites.map((prereq, index) => (
+                                                    <div key={index} className="flex items-start gap-3">
+                                                        <div className="w-2 h-2 bg-primary rounded-full mt-2 flex-shrink-0" />
+                                                        <span>{prereq}</span>
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        </Card>
+                                    </TabsContent>
+                                </div>
+                            </Tabs>
+                        </div>
                     </div>
 
                     {/* Sidebar */}
-                    <div className="space-y-6">
+                    <div className="w-full lg:w-80 flex-shrink-0 space-y-6">
                         <Card className="p-6">
                             <h4 className="font-semibold mb-4">Challenge Stats</h4>
                             <div className="space-y-3 text-sm">

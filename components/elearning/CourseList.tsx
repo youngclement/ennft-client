@@ -97,15 +97,13 @@ export function CourseList({ initialCourses = mockCourses, selectedCategory }: C
 
                 <div className="flex items-center gap-2">
                     <Button
-                        variant={viewMode === 'grid' ? 'default' : 'outline'}
-                        size="sm"
+                        className={viewMode === 'grid' ? 'bg-primary text-primary-foreground hover:bg-primary/90' : 'border border-border bg-transparent hover:bg-accent'}
                         onClick={() => setViewMode('grid')}
                     >
                         <Grid className="h-4 w-4" />
                     </Button>
                     <Button
-                        variant={viewMode === 'list' ? 'default' : 'outline'}
-                        size="sm"
+                        className={viewMode === 'list' ? 'bg-primary text-primary-foreground hover:bg-primary/90' : 'border border-border bg-transparent hover:bg-accent'}
                         onClick={() => setViewMode('list')}
                     >
                         <List className="h-4 w-4" />
@@ -117,7 +115,7 @@ export function CourseList({ initialCourses = mockCourses, selectedCategory }: C
             {featuredCourses.length > 0 && (
                 <div className="mb-12">
                     <h3 className="text-xl font-semibold mb-6">Featured Courses</h3>
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 items-stretch">
                         {featuredCourses.map((course) => (
                             <CourseCard key={course.id} course={course} variant="featured" />
                         ))}
@@ -134,7 +132,7 @@ export function CourseList({ initialCourses = mockCourses, selectedCategory }: C
                     <div
                         className={
                             viewMode === 'grid'
-                                ? 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6'
+                                ? 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 items-stretch'
                                 : 'space-y-4'
                         }
                     >
@@ -160,7 +158,7 @@ export function CourseList({ initialCourses = mockCourses, selectedCategory }: C
                             level: 'All Levels',
                             sort: 'newest',
                         })}
-                        variant="outline"
+                        className="border border-border bg-transparent hover:bg-accent"
                     >
                         Clear Filters
                     </Button>

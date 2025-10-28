@@ -103,7 +103,7 @@ export default function ChallengePage() {
                                 ))}
                             </div>
 
-                            <Badge variant="outline">{challenge.category}</Badge>
+                            <Badge className="border-border">{challenge.category}</Badge>
                         </div>
                     </div>
                 </div>
@@ -131,7 +131,7 @@ export default function ChallengePage() {
                                     <Code className="h-5 w-5" />
                                     Code Editor
                                 </h2>
-                                <Badge variant="outline">Solidity</Badge>
+                                <Badge className="border-border">Solidity</Badge>
                             </div>
 
                             <div className="space-y-4">

@@ -30,7 +30,7 @@ export function TrendingTopics() {
               <div className="relative p-6">
                 <h3 className="text-xl font-semibold mb-2">{topic.name}</h3>
                 <div className="flex items-center justify-between">
-                  <Badge variant="secondary">{topic.count} questions</Badge>
+                  <Badge className="bg-secondary text-secondary-foreground">{topic.count} questions</Badge>
                   <span className="text-sm text-muted-foreground">View all →</span>
                 </div>
               </div>

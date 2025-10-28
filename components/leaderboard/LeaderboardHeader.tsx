@@ -50,7 +50,7 @@ export function LeaderboardHeader() {
             className="pl-9 w-full md:w-[220px]"
           />
         </div>
-        <Button variant="outline">This Week</Button>
+        <Button className="border border-border bg-transparent hover:bg-accent">This Week</Button>
       </div>
     </div>
   );

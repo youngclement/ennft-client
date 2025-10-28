@@ -157,7 +157,7 @@ export function AnswerCard({
                   </motion.div>
                 </TooltipTrigger>
                 <TooltipContent side="bottom">
-                  <Button variant="link">Upvote</Button>
+                  <Button className="text-primary hover:underline p-0 h-auto font-normal">Upvote</Button>
                 </TooltipContent>
               </Tooltip>
             </Button>

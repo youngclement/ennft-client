@@ -122,8 +122,8 @@ export function CollapsibleSidebar() {
         <ScrollArea className="h-full py-4 px-2">
           <div className="space-y-6">
             {!isCollapsed ? (
-              <Card className="p-4 bg-gradient-to-br from-background to-muted/50 shadow-sm border-primary/10">
-                <div className="flex items-center gap-3 mb-4">
+              <Card className=" bg-gradient-to-br from-background to-muted/50 shadow-sm border-primary/10">
+                {/* <div className="flex items-center gap-3 mb-4">
                   <div className="h-8 w-8">
                     <CustomAvatar address={address} size={10} />
                   </div>
@@ -170,7 +170,7 @@ export function CollapsibleSidebar() {
                       </p>
                     </div>
                   </div>
-                </div>
+                </div> */}
               </Card>
             ) : (
               <TooltipProvider delayDuration={200}>

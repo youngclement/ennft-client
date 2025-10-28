@@ -214,7 +214,7 @@ export default function QuestionDetailWrapper({
               <h3 className="font-semibold text-sm">Reward</h3>
             </div>
             <div className="text-xl font-bold text-green-600">
-              {formatEther(question.rewardAmount)} ETH
+              {formatEther(question.rewardAmount)} SOL
             </div>
             <div className="mt-2 space-y-2">
               <p className="text-xs text-muted-foreground">

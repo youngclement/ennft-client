@@ -15,11 +15,11 @@ export function Footer() {
                         <div>
                             <Link href="/" className="flex items-center gap-2 mb-4">
                                 <CircleDollarSign className="h-6 w-6 text-primary" />
-                                <span className="font-bold text-xl">InquireA</span>
+                                <span className="font-bold text-xl">SolanaLearn</span>
                             </Link>
                             <p className="text-muted-foreground max-w-md">
-                                A blockchain-powered Q&A platform where knowledge meets rewards.
-                                Ask questions, provide valuable answers, and earn tokens.
+                                Master Solana development through interactive courses and coding challenges.
+                                Earn NFTs for achievements and practice with real test cases.
                             </p>
                         </div>
                         <FooterLinks />
@@ -35,7 +35,7 @@ export function Footer() {
                 </div>
 
                 <div className="mt-12 pt-8 border-t text-center text-sm text-muted-foreground">
-                    <p>© {new Date().getFullYear()} InquireA. All rights reserved.</p>
+                    <p>© {new Date().getFullYear()} SolanaLearn. All rights reserved.</p>
                 </div>
             </div>
         </footer>

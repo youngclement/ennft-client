@@ -18,10 +18,10 @@ export function HowItWorks() {
           transition={{ duration: 0.6 }}
         >
           <h2 className="text-4xl md:text-5xl font-bold mb-4 text-black dark:text-white">
-            How It Works
+            Master Solana Development
           </h2>
           <p className="text-black dark:text-white text-lg md:text-xl max-w-2xl mx-auto">
-            Discover how our platform simplifies getting help and earning rewards
+            Learn through interactive courses, earn NFTs for achievements, and practice with real test cases
           </p>
         </motion.div>
 

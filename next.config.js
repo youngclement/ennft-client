@@ -11,8 +11,8 @@ const nextConfig = {
     return config;
   },
   eslint: {
-    ignoreDuringBuilds: true,
-    dirs: [],
+    ignoreDuringBuilds: false,
+    dirs: ['app', 'components', 'lib', 'configs', 'contexts', 'constants'],
   },
   images: {
     domains: ['images.unsplash.com', 'i.pravatar.cc', 'cdn.tgdd.vn', 'i.ibb.co'],

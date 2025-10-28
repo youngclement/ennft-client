@@ -32,7 +32,7 @@ export function CourseCard({ course, variant = 'default' }: CourseCardProps) {
 
     if (variant === 'featured') {
         return (
-            <Card className="group overflow-hidden transition-all duration-300 bg-background hover:bg-accent/50 shadow-lg hover:shadow-2xl rounded-xl border border-border hover:border-primary/30 hover:-translate-y-2">
+            <Card className="group overflow-hidden transition-all duration-300 bg-background hover:bg-accent/50 shadow-lg hover:shadow-2xl rounded-xl border border-border hover:border-primary/30 hover:-translate-y-2 h-full flex flex-col">
                 <div className="relative">
                     <div className="aspect-video relative overflow-hidden">
                         <Image
@@ -98,8 +98,8 @@ export function CourseCard({ course, variant = 'default' }: CourseCardProps) {
     }
 
     return (
-        <Card className="group overflow-hidden transition-all duration-300 bg-background hover:bg-accent/50 shadow-sm hover:shadow-lg rounded-lg border border-border hover:border-primary/20 hover:-translate-y-1">
-            <Link href={`/elearning/${course.id}`} className="block">
+        <Card className="group overflow-hidden transition-all duration-300 bg-background hover:bg-accent/50 shadow-sm hover:shadow-lg rounded-lg border border-border hover:border-primary/20 hover:-translate-y-1 h-full flex flex-col">
+            <Link href={`/elearning/${course.id}`} className="flex-1 flex flex-col">
                 <div className="relative aspect-video overflow-hidden">
                     <Image
                         src={course.thumbnail}
@@ -108,7 +108,7 @@ export function CourseCard({ course, variant = 'default' }: CourseCardProps) {
                         className="object-cover transition-transform duration-300 group-hover:scale-105"
                     />
                     <div className="absolute top-2 right-2">
-                        <Badge variant="secondary" className="bg-background/80 backdrop-blur-sm">
+                        <Badge className="bg-background/80 backdrop-blur-sm border-border">
                             {course.level}
                         </Badge>
                     </div>
@@ -140,7 +140,7 @@ export function CourseCard({ course, variant = 'default' }: CourseCardProps) {
 
                     <div className="flex flex-wrap gap-1 mb-3">
                         {course.tags.slice(0, 3).map((tag) => (
-                            <Badge key={tag} variant="outline" className="text-xs">
+                            <Badge key={tag} className="text-xs border-border">
                                 {tag}
                             </Badge>
                         ))}

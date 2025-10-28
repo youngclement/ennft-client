@@ -177,7 +177,7 @@ export function CourseReviews({ reviews, rating, totalReviews }: CourseReviewsPr
 
             {reviews.length > 5 && (
                 <div className="text-center">
-                    <Button variant="outline">Load More Reviews</Button>
+                    <Button className="border border-border bg-transparent hover:bg-accent">Load More Reviews</Button>
                 </div>
             )}
         </div>

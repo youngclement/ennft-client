@@ -16,7 +16,9 @@ import {
   Wallet,
   ChevronRight,
   ExternalLink,
-  LucideIcon
+  LucideIcon,
+  BookOpen,
+  Target
 } from "lucide-react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
@@ -32,35 +34,14 @@ interface SidebarItem {
 
 const sidebarItems: SidebarItem[] = [
   {
-    title: "Home",
-    icon: Home,
-    href: "/",
+    title: "Courses",
+    icon: BookOpen,
+    href: "/elearning",
   },
   {
-    title: "Questions",
-    icon: MessageSquare,
-    href: "/questions",
-    badge: 5,
-  },
-  {
-    title: "Tags",
-    icon: Tags,
-    href: "/tags",
-  },
-  {
-    title: "Leaderboard",
-    icon: Trophy,
-    href: "/leaderboard",
-  },
-  {
-    title: "Users",
-    icon: Users,
-    href: "/users",
-  },
-  {
-    title: "Settings",
-    icon: Settings,
-    href: "/settings",
+    title: "Challenges",
+    icon: Target,
+    href: "/elearning/challenges",
   },
 ]
 

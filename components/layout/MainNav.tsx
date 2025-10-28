@@ -38,7 +38,7 @@ export function MainNav() {
             <Logo />
 
             <span className="font-bold text-xl text-gray-900 dark:text-gray-100">
-              InquireA
+              SolanaLearn
             </span>
           </Link>
 

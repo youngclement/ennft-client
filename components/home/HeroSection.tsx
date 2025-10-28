@@ -65,7 +65,7 @@ export function HeroSection() {
             <div className="inline-flex items-center rounded-full px-6 py-2 border border-border mb-8 bg-secondary/50 backdrop-blur-sm">
               <CircleDollarSign className="h-4 w-4 text-primary mr-2" />
               <span className="text-sm font-medium text-foreground">
-                Earn tokens by helping others
+                Learn Solana, Earn NFTs, Master Development
               </span>
             </div>
           </motion.div>
@@ -80,10 +80,10 @@ export function HeroSection() {
               <TypewriterEffect
                 className="font-extrabold"
                 words={[
-                  { text: 'Where' },
-                  { text: 'Knowledge', className: 'text-primary' },
-                  { text: 'Meets' },
-                  { text: 'Rewards', className: 'text-primary' },
+                  { text: 'Master' },
+                  { text: 'Solana', className: 'text-primary' },
+                  { text: 'Development' },
+                  { text: 'with NFTs', className: 'text-primary' },
                 ]}
               />
             </h1>
@@ -96,9 +96,9 @@ export function HeroSection() {
             animate="visible"
           >
             <p className="text-[1.3rem] mb-8 leading-relaxed">
-              Ask questions with token bounties, provide valuable answers, and
-              earn rewards. Join InquireA's blockchain-powered Q&A community
-              today.
+              Learn Solana development through interactive courses, earn NFTs for
+              completing challenges, and practice with real test cases. Master
+              blockchain development with hands-on experience.
             </p>
           </motion.div>
 
@@ -109,9 +109,9 @@ export function HeroSection() {
             animate="visible"
             className="flex flex-col sm:flex-row items-center justify-center gap-4 mt-11"
           >
-            <Link href="/questions" passHref>
+            <Link href="/elearning" passHref>
               <ShimmerButton className="px-8 py-3 font-medium rounded-md bg-primary text-primary-foreground hover:bg-primary/90">
-                Explore Questions
+                Start Learning
                 <ArrowRight className="ml-2 h-4 w-4" />
               </ShimmerButton>
             </Link>
