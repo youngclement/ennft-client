@@ -1,49 +1,77 @@
 'use client';
 
-import { WalletAdapterNetwork } from '@solana/wallet-adapter-base';
-import { ConnectionProvider, WalletProvider } from '@solana/wallet-adapter-react';
-import { WalletModalProvider } from '@solana/wallet-adapter-react-ui';
+import CustomAvatar from '@/components/users/CustomAvatar';
+import walletConfig, { network } from '@/configs/WalletConfig';
 import {
-  PhantomWalletAdapter,
-  SolflareWalletAdapter,
-  TorusWalletAdapter,
-} from '@solana/wallet-adapter-wallets';
-import { clusterApiUrl } from '@solana/web3.js';
-import { useMemo } from 'react';
+  darkTheme,
+  lightTheme,
+  RainbowKitProvider,
+} from '@rainbow-me/rainbowkit';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-
-// Import wallet adapter CSS
-import '@solana/wallet-adapter-react-ui/styles.css';
+import { useTheme } from 'next-themes';
+import React, { useEffect, useState } from 'react';
+import { WagmiProvider } from 'wagmi';
 
 const queryClient = new QueryClient();
 
 type Props = React.ReactNode;
 
 export default function ContextProvider({ children }: { children: Props }) {
-  // The network can be set to 'devnet', 'testnet', or 'mainnet-beta'.
-  const network = WalletAdapterNetwork.Devnet;
-
-  // You can also provide a custom RPC endpoint.
-  const endpoint = useMemo(() => clusterApiUrl(network), [network]);
-
-  const wallets = useMemo(
-    () => [
-      new PhantomWalletAdapter(),
-      new SolflareWalletAdapter(),
-      new TorusWalletAdapter(),
-    ],
-    [network]
+  const [mounted, setMounted] = React.useState(false);
+  const { theme } = useTheme();
+  const [rainbowKitTheme, setRainbowKitTheme] = useState(
+    darkTheme({
+      accentColor: '#1d1d1d', // Indigo accent
+      accentColorForeground: 'white',
+      borderRadius: 'medium',
+      fontStack: 'system',
+      overlayBlur: 'small',
+    })
   );
 
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  useEffect(() => {
+    const themeConfig = {
+      dark: {
+        accentColor: '#1d1d1d', // Indigo accent for dark mode
+        accentColorForeground: 'white',
+        borderRadius: 'medium',
+        fontStack: 'system',
+        overlayBlur: 'small',
+        mode: 'dark' as const,
+      },
+      light: {
+        accentColor: '#4f46e5', // Slightly darker indigo for light mode
+        accentColorForeground: 'white',
+        borderRadius: 'medium',
+        fontStack: 'system',
+        overlayBlur: 'small',
+        mode: 'light' as const,
+      },
+    };
+
+
+
+
+  }, [theme]);
+
   return (
-    <ConnectionProvider endpoint={endpoint}>
-      <WalletProvider wallets={wallets} autoConnect>
-        <WalletModalProvider>
-          <QueryClientProvider client={queryClient}>
-            {children}
-          </QueryClientProvider>
-        </WalletModalProvider>
-      </WalletProvider>
-    </ConnectionProvider>
+    <WagmiProvider config={walletConfig}>
+      <QueryClientProvider client={queryClient}>
+        <RainbowKitProvider
+          initialChain={network}
+          showRecentTransactions={true}
+          theme={rainbowKitTheme}
+          avatar={CustomAvatar}
+          locale="en-US"
+          coolMode // Adds confetti animation when connecting
+        >
+          {mounted && children}
+        </RainbowKitProvider>
+      </QueryClientProvider>
+    </WagmiProvider>
   );
 }

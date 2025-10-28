@@ -16,8 +16,6 @@ import {
   Tags,
   Trophy,
   Users,
-  GraduationCap,
-  Target,
 } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
@@ -39,16 +37,6 @@ const sidebarItems = [
     title: 'Home',
     icon: Home,
     href: '/',
-  },
-  {
-    title: 'Courses',
-    icon: GraduationCap,
-    href: '/elearning',
-  },
-  {
-    title: 'Challenges',
-    icon: Target,
-    href: '/elearning/challenges',
   },
   {
     title: 'Questions',

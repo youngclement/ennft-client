@@ -111,7 +111,7 @@ export const mockInstructors: Instructor[] = [
     name: "Dr. Sarah Johnson",
     avatar:
       "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face",
-    bio: "Senior Software Engineer at Google with 10+ years of experience in full-stack development and Solana blockchain technology.",
+    bio: "Senior Software Engineer at Google with 10+ years of experience in full-stack development and blockchain technology.",
     rating: 4.8,
     students: 15420,
     courses: 12,
@@ -121,7 +121,7 @@ export const mockInstructors: Instructor[] = [
     name: "Mark Chen",
     avatar:
       "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face",
-    bio: "Solana Developer and Entrepreneur. Founder of 3 successful DeFi projects on Solana.",
+    bio: "Blockchain Developer and Entrepreneur. Founder of 3 successful DeFi projects.",
     rating: 4.9,
     students: 8920,
     courses: 8,
@@ -142,10 +142,10 @@ export const mockInstructors: Instructor[] = [
 export const mockCourses: Course[] = [
   {
     id: "1",
-    title: "Complete Solana Development Bootcamp",
-    subtitle: "Master Solana blockchain development from zero to hero",
+    title: "Complete Blockchain Development Bootcamp",
+    subtitle: "Learn to build decentralized applications from scratch",
     description:
-      "This comprehensive course covers everything you need to know about Solana development. From basic concepts to advanced program development, you'll learn to build high-performance dApps on Solana.",
+      "This comprehensive course covers everything you need to know about blockchain development. From basic concepts to advanced smart contract development, you'll learn to build production-ready dApps.",
     thumbnail:
       "https://images.unsplash.com/photo-1633356122544-f134324a6cee?w=400&h=225&fit=crop&crop=center",
     instructor: mockInstructors[0],
@@ -156,19 +156,18 @@ export const mockCourses: Course[] = [
     students: 8920,
     duration: 480, // 8 hours
     level: "intermediate",
-    category: "Solana",
-    tags: ["Solana", "Rust", "Smart Contracts", "Web3", "Blockchain"],
+    category: "Blockchain",
+    tags: ["Blockchain", "Smart Contracts", "Ethereum", "Web3"],
     whatYouWillLearn: [
-      "Understand Solana architecture and consensus",
-      "Write and deploy Solana programs",
+      "Understand blockchain fundamentals",
+      "Write and deploy smart contracts",
       "Build decentralized applications",
-      "Work with Anchor framework",
-      "Implement SPL token standards",
-      "Master Solana CLI and tooling",
+      "Work with Web3.js and ethers.js",
+      "Implement token standards (ERC-20, ERC-721)",
     ],
     requirements: [
       "Basic programming knowledge",
-      "Understanding of Rust or JavaScript",
+      "Understanding of JavaScript",
       "No prior blockchain experience required",
     ],
     createdAt: "2024-01-15T00:00:00Z",
@@ -177,14 +176,14 @@ export const mockCourses: Course[] = [
     sections: [
       {
         id: "1",
-        title: "Solana Fundamentals",
+        title: "Blockchain Fundamentals",
         order: 1,
         lessons: [
           {
             id: "1",
-            title: "What is Solana?",
+            title: "What is Blockchain?",
             description:
-              "Introduction to Solana blockchain and its unique features",
+              "Introduction to blockchain technology and its applications",
             duration: 15,
             videoUrl: "https://www.youtube.com/watch?v=SSo_EIwHSd4",
             order: 1,
@@ -192,9 +191,8 @@ export const mockCourses: Course[] = [
           },
           {
             id: "2",
-            title: "Solana Architecture",
-            description:
-              "Understanding Solana's architecture and consensus mechanism",
+            title: "Cryptography Basics",
+            description: "Understanding cryptographic principles in blockchain",
             duration: 20,
             videoUrl: "https://www.youtube.com/watch?v=1rWV7jKzNyc",
             order: 2,
@@ -204,13 +202,13 @@ export const mockCourses: Course[] = [
       },
       {
         id: "2",
-        title: "Program Development",
+        title: "Smart Contract Development",
         order: 2,
         lessons: [
           {
             id: "3",
-            title: "Rust for Solana",
-            description: "Learn Rust programming for Solana development",
+            title: "Solidity Fundamentals",
+            description: "Learn the basics of Solidity programming",
             duration: 25,
             videoUrl: "https://www.youtube.com/watch?v=ipwxYa-F1uY",
             order: 1,
@@ -218,8 +216,8 @@ export const mockCourses: Course[] = [
           },
           {
             id: "4",
-            title: "Writing Your First Program",
-            description: "Build and deploy your first Solana program",
+            title: "Writing Your First Smart Contract",
+            description: "Build and deploy your first smart contract",
             duration: 30,
             videoUrl: "https://example.com/lesson4.mp4",
             order: 2,
@@ -283,10 +281,10 @@ export const mockCourses: Course[] = [
   },
   {
     id: "3",
-    title: "Solana DeFi Protocol Development",
-    subtitle: "Create decentralized finance applications on Solana",
+    title: "DeFi Protocol Development",
+    subtitle: "Create decentralized finance applications",
     description:
-      "Learn to build DeFi protocols from the ground up on Solana. Cover liquidity pools, yield farming, staking, and more with high-performance Solana programs.",
+      "Learn to build DeFi protocols from the ground up. Cover liquidity pools, yield farming, staking, and more.",
     thumbnail:
       "https://images.unsplash.com/photo-1559526324-4b87b5e36e44?w=400&h=225&fit=crop&crop=center",
     instructor: mockInstructors[1],
@@ -297,8 +295,8 @@ export const mockCourses: Course[] = [
     students: 5430,
     duration: 420,
     level: "advanced",
-    category: "Solana",
-    tags: ["DeFi", "Solana", "Rust", "Smart Contracts", "Blockchain"],
+    category: "Blockchain",
+    tags: ["DeFi", "Blockchain", "Smart Contracts", "Ethereum"],
     whatYouWillLearn: [
       "Understand DeFi ecosystem",
       "Build AMM protocols",
@@ -378,8 +376,7 @@ export const mockReviews: Review[] = [
 // Categories for filtering
 export const courseCategories = [
   "All Categories",
-  "Solana",
-  "Rust Programming",
+  "Blockchain",
   "Web Development",
   "Mobile Development",
   "Data Science",

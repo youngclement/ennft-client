@@ -65,7 +65,7 @@ export function HeroSection() {
             <div className="inline-flex items-center rounded-full px-6 py-2 border border-border mb-8 bg-secondary/50 backdrop-blur-sm">
               <CircleDollarSign className="h-4 w-4 text-primary mr-2" />
               <span className="text-sm font-medium text-foreground">
-                Master Solana Development
+                Earn tokens by helping others
               </span>
             </div>
           </motion.div>
@@ -80,10 +80,10 @@ export function HeroSection() {
               <TypewriterEffect
                 className="font-extrabold"
                 words={[
-                  { text: 'Learn' },
-                  { text: 'Solana', className: 'text-primary' },
-                  { text: 'Development' },
-                  { text: 'Together', className: 'text-primary' },
+                  { text: 'Where' },
+                  { text: 'Knowledge', className: 'text-primary' },
+                  { text: 'Meets' },
+                  { text: 'Rewards', className: 'text-primary' },
                 ]}
               />
             </h1>
@@ -96,8 +96,9 @@ export function HeroSection() {
             animate="visible"
           >
             <p className="text-[1.3rem] mb-8 leading-relaxed">
-              Master Solana development with expert-led courses and hands-on challenges.
-              Build high-performance dApps and join the future of Web3 development.
+              Ask questions with token bounties, provide valuable answers, and
+              earn rewards. Join InquireA's blockchain-powered Q&A community
+              today.
             </p>
           </motion.div>
 
@@ -108,9 +109,9 @@ export function HeroSection() {
             animate="visible"
             className="flex flex-col sm:flex-row items-center justify-center gap-4 mt-11"
           >
-            <Link href="/elearning" passHref>
+            <Link href="/questions" passHref>
               <ShimmerButton className="px-8 py-3 font-medium rounded-md bg-primary text-primary-foreground hover:bg-primary/90">
-                Start Learning
+                Explore Questions
                 <ArrowRight className="ml-2 h-4 w-4" />
               </ShimmerButton>
             </Link>

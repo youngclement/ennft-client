@@ -35,18 +35,18 @@ export function CourseHeader() {
                 >
                     <div className="inline-flex items-center gap-2 bg-primary/10 text-primary px-4 py-2 rounded-full text-sm font-medium mb-6">
                         <GraduationCap className="h-4 w-4" />
-                        Solana Experts
+                        Learn from the Best
                     </div>
 
                     <h1 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-foreground to-foreground/70 bg-clip-text text-transparent">
-                        Master Solana Development with
+                        Master New Skills with
                         <br />
                         <span className="text-primary">Expert-Led Courses</span>
                     </h1>
 
                     <p className="text-lg text-muted-foreground mb-8 max-w-2xl mx-auto">
-                        Learn Solana development from industry experts with hands-on courses and challenges.
-                        Master Rust programming, program deployment, and DeFi development on Solana.
+                        Access thousands of premium courses taught by industry experts.
+                        Learn at your own pace with lifetime access to course materials.
                     </p>
 
                     <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-12">
