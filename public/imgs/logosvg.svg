@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg
+  version="1.1"
+  xmlns="http://www.w3.org/2000/svg"
+  viewBox="0 0 800 800"
+  width="4000"
+  height="4000"
+>
+  <!-- Nền đen -->
+  <rect width="800" height="800" fill="black" />
+
+  <!-- Nhóm SVG căn giữa -->
+  <g transform="translate(250, 250)">
+    <path
+      fill="white"
+      fill-rule="evenodd"
+      clip-rule="evenodd"
+      d="M107.05 214.51L107.05 136.11L160.94 136.11L160.94 108.37L79.3 108.37L79.3 242.25L160.94 242.25L160.94 214.51Z"
+    />
+    <path
+      fill="white"
+      fill-rule="evenodd"
+      clip-rule="evenodd"
+      d="M282.33 80.62L160.94 80.63L160.94 108.37L254.59 108.37L254.59 214.51L192.15 214.51L160.94 242.25L160.94 279.38L202.7 242.25L282.33 242.25Z"
+    />
+    <path
+      fill="white"
+      fill-rule="evenodd"
+      clip-rule="evenodd"
+      d="M138.4 160.83c-7.66 0-13.87 6.21-13.87 13.87s6.21 13.87 13.87 13.87c7.66 0 13.87-6.21 13.87-13.87S146.06 160.83 138.4 160.83z"
+    />
+    <path
+      fill="white"
+      fill-rule="evenodd"
+      clip-rule="evenodd"
+      d="M180.82 160.83c-7.66 0-13.87 6.21-13.87 13.87s6.21 13.87 13.87 13.87c7.66 0 13.87-6.21 13.87-13.87S188.48 160.83 180.82 160.83z"
+    />
+    <path
+      fill="white"
+      fill-rule="evenodd"
+      clip-rule="evenodd"
+      d="M223.24 188.57c7.66 0 13.87-6.21 13.87-13.87s-6.21-13.87-13.87-13.87c-7.66 0-13.87 6.21-13.87 13.87S215.58 188.57 223.24 188.57z"
+    />
+  </g>
+</svg>
