@@ -115,7 +115,7 @@ export function MainNav() {
             </Link>
           </Button>
 
-          <CustomConnectButton />
+          {/* <CustomConnectButton /> */}
         </div>
       </div>
     </header>
