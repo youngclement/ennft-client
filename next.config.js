@@ -7,6 +7,7 @@ const nextConfig = {
     ignoreBuildErrors: true,
   },
   webpack: (config, { isServer }) => {
+    config.cache = { type: 'memory' };
     config.resolve.fallback = { fs: false, net: false, tls: false };
     return config;
   },
