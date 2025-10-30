@@ -1,13 +1,22 @@
-import {
-  useAccount,
-  useWaitForTransactionReceipt,
-  useWriteContract,
-} from 'wagmi';
-import { contractABI } from '../contracts/contractABI';
 import { useToast } from './use-toast';
 import { createAnswer } from '@/service/answer.service';
 import { network } from '@/configs/WalletConfig';
 import { useEffect } from 'react';
+
+// Conditionally import wagmi hooks only when needed
+let useAccount: any = null;
+let useWaitForTransactionReceipt: any = null;
+let useWriteContract: any = null;
+try {
+  const wagmi = require('wagmi');
+  useAccount = wagmi.useAccount;
+  useWaitForTransactionReceipt = wagmi.useWaitForTransactionReceipt;
+  useWriteContract = wagmi.useWriteContract;
+} catch (error) {
+  // wagmi not available, will provide mock implementations
+}
+
+const contractABI = require('../contracts/contractABI').contractABI;
 
 // Cập nhật interface với parentAnswerId
 interface SubmitAnswerArgs {
@@ -18,7 +27,18 @@ interface SubmitAnswerArgs {
 
 export function useAnswer() {
   const { toast } = useToast();
-  const { address: account } = useAccount();
+
+  // Provide mock implementations if wagmi is not available
+  const accountData = useAccount ? useAccount() : { address: null };
+  const { address: account } = accountData;
+
+  const writeContractData = useWriteContract ? useWriteContract() : {
+    data: null,
+    error: null,
+    isPending: false,
+    writeContract: () => {},
+    isError: false,
+  };
 
   const {
     data: hash,
@@ -26,10 +46,14 @@ export function useAnswer() {
     isPending,
     writeContract,
     isError,
-  } = useWriteContract();
+  } = writeContractData;
 
-  const { isLoading: isConfirming, isSuccess: isConfirmed } =
-    useWaitForTransactionReceipt({ hash });
+  const receiptData = useWaitForTransactionReceipt ? useWaitForTransactionReceipt({ hash }) : {
+    isLoading: false,
+    isSuccess: false
+  };
+
+  const { isLoading: isConfirming, isSuccess: isConfirmed } = receiptData;
 
   const submitAnswer = async ({
     questionId,

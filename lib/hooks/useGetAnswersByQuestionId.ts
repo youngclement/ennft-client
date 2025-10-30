@@ -1,9 +1,16 @@
-'use client';
+"use client";
 
-import { useState, useEffect, useCallback } from 'react';
-import { useReadContract } from 'wagmi';
-import { contractABI } from '../contracts/contractABI';
-import { getAnswerById } from '@/service/answer.service';
+import { useState, useEffect, useCallback } from "react";
+import { contractABI } from "../contracts/contractABI";
+import { getAnswerById } from "@/service/answer.service";
+
+// Conditionally import wagmi hook only when needed
+let useReadContract: any = null;
+try {
+  useReadContract = require("wagmi").useReadContract;
+} catch (error) {
+  // wagmi not available, will use mock data
+}
 
 // Cập nhật interface ContractAnswer để thêm questionId và parentAnswerId
 export interface ContractAnswer {
@@ -66,7 +73,7 @@ export function useGetAnswersByQuestionId(
 
         setAnswers(updatedAnswers);
       } catch (error) {
-        console.error('Error fetching answer texts:', error);
+        console.error("Error fetching answer texts:", error);
       }
     },
     []
@@ -114,7 +121,7 @@ export function useGetAnswersByQuestionId(
         // }
         setIsLoading(false);
       } catch (err) {
-        setError(err instanceof Error ? err : new Error('Unknown error'));
+        setError(err instanceof Error ? err : new Error("Unknown error"));
         setIsLoading(false);
       }
     };

@@ -1,10 +1,17 @@
-'use client';
+"use client";
 
-import { getQuestionById } from '@/service/question.service';
-import { useEffect, useState } from 'react';
-import { Address } from 'viem';
-import { useReadContract } from 'wagmi';
-import { contractABI } from '../contracts/contractABI';
+import { getQuestionById } from "@/service/question.service";
+import { useEffect, useState } from "react";
+import { Address } from "viem";
+import { contractABI } from "../contracts/contractABI";
+
+// Conditionally import wagmi hook only when needed
+let useReadContract: any = null;
+try {
+  useReadContract = require("wagmi").useReadContract;
+} catch (error) {
+  // wagmi not available, will use mock data
+}
 
 export interface ContractQuestion {
   id: bigint;
@@ -29,21 +36,24 @@ export function useGetQuestions(initialPageSize = 10) {
   const [mergedQuestions, setMergedQuestions] = useState<MergedQuestion[]>([]);
   const [isFetchingOffChain, setIsFetchingOffChain] = useState(false);
 
-  const {
-    data: contractData,
-    error,
-    isLoading: isLoadingContract,
-    refetch,
-  } = useReadContract({
+  // Only use wagmi if it's available
+  const wagmiData = useReadContract ? useReadContract({
     address: process.env.NEXT_PUBLIC_CONTRACT_ADDRESS as Address,
     abi: contractABI,
-    functionName: 'getQuestions',
+    functionName: "getQuestions",
     args: [page, pageSize],
     query: {
       enabled: true,
       staleTime: 10000 * 60 * 5,
     },
-  });
+  }) : { data: null, error: null, isLoading: false, refetch: () => {} };
+
+  const {
+    data: contractData,
+    error,
+    isLoading: isLoadingContract,
+    refetch,
+  } = wagmiData;
 
   useEffect(() => {
     const fetchOffChainData = async () => {
@@ -71,9 +81,9 @@ export function useGetQuestions(initialPageSize = 10) {
             );
             return {
               ...q,
-              questionText: 'Error fetching data',
-              questionContent: 'Error fetching data',
-              category: 'Unknown',
+              questionText: "Error fetching data",
+              questionContent: "Error fetching data",
+              category: "Unknown",
             };
           }
         })

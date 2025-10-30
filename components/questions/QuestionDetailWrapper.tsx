@@ -9,7 +9,7 @@ import { useAnswer } from '@/lib/hooks/useAnswer';
 import { useGetAnswersByQuestionId } from '@/lib/hooks/useGetAnswersByQuestionId';
 import { MergedQuestion } from '@/lib/hooks/useGetQuestions';
 import { useReputation } from '@/lib/hooks/useReputation';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, useMemo } from 'react';
 import { Address, formatEther } from 'viem';
 import { Award, CircleDollarSign, Shield, Clock } from 'lucide-react';
 import { AnswerEditor } from './AnswerEditor';
@@ -38,10 +38,14 @@ const AutoSelectTimer = dynamic(
 
 interface QuestionDetailWrapperProps {
   question: MergedQuestion;
+  mockAnswers?: any[];
+  useMockOnly?: boolean;
 }
 
 export default function QuestionDetailWrapper({
   question,
+  mockAnswers = [],
+  useMockOnly = false,
 }: QuestionDetailWrapperProps) {
   const { toast } = useToast();
   const { submitAnswer } = useAnswer();
@@ -50,7 +54,64 @@ export default function QuestionDetailWrapper({
   const questionCardRef = useRef<HTMLDivElement>(null);
   const { reputation, getTrustLevel, getDiscountRate } = useReputation();
 
-  // Sử dụng hook để lấy danh sách answers
+  // Use mock answers if provided, otherwise use the hook
+  const useMockData = mockAnswers.length > 0 || useMockOnly;
+
+  const wagmiAnswersData = useMockOnly ? {
+    answers: [],
+    totalAnswers: 0,
+    totalPages: 1,
+    currentPage: 1,
+    isLoading: false,
+    error: null,
+    changePage: () => {},
+  } : useGetAnswersByQuestionId(BigInt(question.id));
+
+  const {
+    answers: realAnswers,
+    totalAnswers: realTotalAnswers,
+    totalPages: realTotalPages,
+    currentPage: realCurrentPage,
+    isLoading: realIsLoading,
+    error: realError,
+    changePage: realChangePage,
+  } = wagmiAnswersData;
+
+  // Mock data structure
+  const mockAnswersData = useMemo(() => {
+    if (!useMockData) return null;
+
+    return {
+      answers: mockAnswers.map(answer => ({
+        id: BigInt(answer.id),
+        responder: answer.responder,
+        answerText: answer.answerText,
+        answerContent: answer.answerContent,
+        upvotes: answer.upvotes,
+        rewardAmount: BigInt(answer.rewardAmount),
+        createdAt: BigInt(answer.createdAt),
+        isAccepted: answer.isAccepted || false,
+      })),
+      totalAnswers: mockAnswers.length,
+      totalPages: 1,
+      currentPage: 1,
+      isLoading: false,
+      error: null,
+      changePage: () => {},
+    };
+  }, [mockAnswers, useMockData]);
+
+  // Use mock or real data
+  const answersData = useMockData ? mockAnswersData : {
+    answers: realAnswers,
+    totalAnswers: realTotalAnswers,
+    totalPages: realTotalPages,
+    currentPage: realCurrentPage,
+    isLoading: realIsLoading,
+    error: realError,
+    changePage: realChangePage,
+  };
+
   const {
     answers,
     totalAnswers,
@@ -59,7 +120,7 @@ export default function QuestionDetailWrapper({
     isLoading,
     error,
     changePage,
-  } = useGetAnswersByQuestionId(BigInt(question.id));
+  } = answersData;
 
   // Add scroll event listener for question card
   useEffect(() => {

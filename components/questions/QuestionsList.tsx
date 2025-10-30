@@ -8,12 +8,31 @@ import { Skeleton } from '@/components/ui/skeleton';
 import { useEffect, useState } from 'react';
 import { QuestionsSort } from './QuestionsSort';
 
-export default function QuestionsList({ filter }: { filter: string | null }) {
-  const { questions, isLoading, pagination, changePage } = useGetQuestions();
+export default function QuestionsList({
+  filter,
+  sortOption,
+  onSortChange,
+  mockData,
+  useMockOnly = false
+}: {
+  filter: string | null;
+  sortOption?: string;
+  onSortChange?: (sort: string) => void;
+  mockData?: any[];
+  useMockOnly?: boolean;
+}) {
+  const wagmiData = useMockOnly ? {
+    questions: [],
+    isLoading: false,
+    pagination: { currentPage: 1, totalPages: 1 },
+    changePage: () => {}
+  } : useGetQuestions();
+
+  const { questions, isLoading, pagination, changePage } = wagmiData;
   const [filteredQuestions, setFilteredQuestions] = useState<
     ContractQuestion[]
   >([]);
-  const [sortOption, setSortOption] = useState<string>('newest');
+  const [currentSortOption, setCurrentSortOption] = useState<string>('newest');
   const [loading, setLoading] = useState(false);
 
   const { currentPage, totalPages } = pagination ?? {
@@ -21,10 +40,19 @@ export default function QuestionsList({ filter }: { filter: string | null }) {
     totalPages: 1,
   };
 
+  // Use mock data if provided, otherwise use real data
+  const dataToUse = mockData || questions;
+
+  useEffect(() => {
+    if (sortOption) {
+      setCurrentSortOption(sortOption);
+    }
+  }, [sortOption]);
+
   useEffect(() => {
     setLoading(true);
 
-    let updatedQuestions = questions.filter((question) => {
+    let updatedQuestions = dataToUse.filter((question) => {
       if (filter === 'Recent') return true;
       if (filter === 'Most Voted') return false; // Không có `votes`, giữ false.
       if (filter === 'Highest Bounty')
@@ -38,12 +66,12 @@ export default function QuestionsList({ filter }: { filter: string | null }) {
 
     // Sắp xếp theo sortOption
     updatedQuestions = updatedQuestions.sort((a, b) => {
-      if (sortOption === 'newest')
+      if (currentSortOption === 'newest')
         return Number(b.createdAt) - Number(a.createdAt);
-      if (sortOption === 'votes') return 0; // Tạm để 0 vì không có `votes`.
-      if (sortOption === 'bounty')
+      if (currentSortOption === 'votes') return 0; // Tạm để 0 vì không có `votes`.
+      if (currentSortOption === 'bounty')
         return Number(b.rewardAmount) - Number(a.rewardAmount);
-      if (sortOption === 'answers') return 0; // Tạm để 0 vì không có `answers`.
+      if (currentSortOption === 'answers') return 0; // Tạm để 0 vì không có `answers`.
       return 0;
     });
 
@@ -51,7 +79,7 @@ export default function QuestionsList({ filter }: { filter: string | null }) {
       setFilteredQuestions(updatedQuestions);
       setLoading(false);
     }, 200);
-  }, [filter, questions, sortOption]);
+  }, [filter, dataToUse, currentSortOption]);
 
   if (loading) {
     return (
@@ -78,7 +106,10 @@ export default function QuestionsList({ filter }: { filter: string | null }) {
       {/* Sort Component */}
       <div className="flex justify-between items-center pb-2 border-b border-muted">
         <h2 className="text-xl font-semibold text-primary">Questions</h2>
-        <QuestionsSort sortOption={sortOption} onSortChange={setSortOption} />
+        <QuestionsSort
+          sortOption={currentSortOption}
+          onSortChange={onSortChange || ((sort) => setCurrentSortOption(sort))}
+        />
       </div>
 
       {/* Skeleton Loading */}

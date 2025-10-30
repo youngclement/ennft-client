@@ -1,51 +1,53 @@
 "use client";
 
-// import QuestionDetailWrapper from '@/components/questions/QuestionDetailWrapper';
-// import { useGetQuestionById } from '@/lib/hooks/useGetQuestionById';
-// import { Loader2 } from 'lucide-react';
-import { Suspense } from "react";
+import QuestionDetailWrapper from '@/components/questions/QuestionDetailWrapper';
+import { questions, mockAnswers } from '@/lib/data/mock-questions';
+import { useMemo } from 'react';
 
 export default function QuestionPage({ params }: { params: { id: string } }) {
-  // const questionId = BigInt(params.id);
+  const questionId = params.id;
 
-  // const { question, error, isLoading } = useGetQuestionById(questionId);
+  // Find mock question data
+  const mockQuestion = useMemo(() => {
+    const question = questions.find(q => q.id === questionId);
+    if (!question) return null;
 
-  // if (isLoading) {
-  //   return (
-  //     <div className="flex justify-center items-center min-h-screen">
-  //       <div className="flex items-center space-x-2">
-  //         <Loader2 className="h-8 w-8 animate-spin text-primary" />
-  //         <span>Loading question...</span>
-  //       </div>
-  //     </div>
-  //   );
-  // }
+    return {
+      id: BigInt(question.id),
+      asker: question.asker,
+      questionDetailId: question.id,
+      rewardAmount: BigInt(question.rewardAmount),
+      createdAt: BigInt(question.createdAt),
+      deadline: BigInt(new Date(question.deadline).getTime()),
+      isClosed: question.isClosed,
+      chosenAnswerId: BigInt(question.chosenAnswerId),
+      questionText: question.questionText,
+      questionContent: question.questionContent,
+      category: question.category,
+    };
+  }, [questionId]);
 
-  // if (error) {
-  //   return (
-  //     <div className="text-center py-12">
-  //       <h1 className="text-2xl font-bold mb-4">Error Loading Question</h1>
-  //       <p className="text-muted-foreground">
-  //         {error.message || 'An unexpected error occurred'}
-  //       </p>
-  //     </div>
-  //   );
-  // }
+  // Get mock answers for this question
+  const mockQuestionAnswers = useMemo(() => {
+    return mockAnswers[questionId] || [];
+  }, [questionId]);
 
-  // if (!question) {
-  //   return (
-  //     <div className="text-center py-12">
-  //       <h1 className="text-2xl font-bold mb-4">Question Not Found</h1>
-  //       <p className="text-muted-foreground">
-  //         The question you're looking for doesn't exist or has been removed.
-  //       </p>
-  //     </div>
-  //   );
-  // }
+  if (!mockQuestion) {
+    return (
+      <div className="text-center py-12">
+        <h1 className="text-2xl font-bold mb-4">Question Not Found</h1>
+        <p className="text-muted-foreground">
+          The question you're looking for doesn't exist or has been removed.
+        </p>
+      </div>
+    );
+  }
 
   return (
-    <Suspense fallback={<div>Loading...</div>}>
-      {/* <QuestionDetailWrapper question={question} /> */}
-    </Suspense>
+    <QuestionDetailWrapper
+      question={mockQuestion}
+      mockAnswers={mockQuestionAnswers}
+      useMockOnly={true}
+    />
   );
 }

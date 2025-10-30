@@ -1,9 +1,16 @@
-'use client';
+"use client";
 
-import { useState, useEffect } from 'react';
-import { useReadContract } from 'wagmi';
-import { contractABI } from '../contracts/contractABI';
-import { getQuestionById as fetchOffChainData } from '@/service/question.service';
+import { useState, useEffect } from "react";
+import { contractABI } from "../contracts/contractABI";
+import { getQuestionById as fetchOffChainData } from "@/service/question.service";
+
+// Conditionally import wagmi hook only when needed
+let useReadContract: any = null;
+try {
+  useReadContract = require("wagmi").useReadContract;
+} catch (error) {
+  // wagmi not available, will use mock data
+}
 
 export interface ContractQuestion {
   id: bigint;
@@ -26,14 +33,14 @@ export interface MergedQuestion extends ContractQuestion {
 function isValidContractData(data: unknown): data is ContractQuestion {
   return (
     data !== null &&
-    typeof data === 'object' &&
-    'asker' in data &&
-    'questionDetailId' in data &&
-    'rewardAmount' in data &&
-    'createdAt' in data &&
-    'deadline' in data &&
-    'isClosed' in data &&
-    'chosenAnswerId' in data
+    typeof data === "object" &&
+    "asker" in data &&
+    "questionDetailId" in data &&
+    "rewardAmount" in data &&
+    "createdAt" in data &&
+    "deadline" in data &&
+    "isClosed" in data &&
+    "chosenAnswerId" in data
   );
 }
 
@@ -46,28 +53,30 @@ export function useGetQuestionById(initialQuestionId?: bigint) {
   );
   const [isFetchingOffChain, setIsFetchingOffChain] = useState(false);
 
-  // Lấy dữ liệu từ smart contract
-  const {
-    data: contractData,
-    error,
-    isLoading: isLoadingContract,
-    refetch,
-  } = useReadContract({
+  // Lấy dữ liệu từ smart contract (only if wagmi is available)
+  const wagmiData = useReadContract ? useReadContract({
     address: process.env.NEXT_PUBLIC_CONTRACT_ADDRESS as `0x${string}`,
     abi: contractABI,
-    functionName: 'getQuestionById',
+    functionName: "getQuestionById",
     args: questionId ? [questionId] : undefined,
     query: {
       enabled: !!questionId,
       staleTime: 1000 * 60 * 5,
     },
-  });
+  }) : { data: null, error: null, isLoading: false, refetch: () => {} };
+
+  const {
+    data: contractData,
+    error,
+    isLoading: isLoadingContract,
+    refetch,
+  } = wagmiData;
 
   // Khi có dữ liệu on-chain, gọi API để lấy dữ liệu off-chain
   useEffect(() => {
     const fetchOffChainDataForQuestion = async () => {
       if (!contractData || !isValidContractData(contractData)) {
-        console.error('Invalid contract data:', contractData);
+        console.error("Invalid contract data:", contractData);
         return;
       }
 
