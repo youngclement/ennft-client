@@ -45,7 +45,7 @@ export default function Navbar() {
             </Link>
           </Button>
           <Button variant="ghost" size="icon" asChild>
-            <Link href="/profile">
+            <Link href="/users/1">
               <User className="h-4 w-4" />
             </Link>
           </Button>

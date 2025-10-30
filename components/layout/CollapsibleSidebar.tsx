@@ -16,11 +16,13 @@ import {
   Tags,
   Trophy,
   Users,
+  User,
+  ExternalLinkIcon,
 } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState, useEffect } from "react";
-import { useAccount, useBalance, useChains } from "wagmi";
+import { useState, useEffect, useMemo } from "react";
+import { useWallet } from "@solana/wallet-adapter-react";
 import {
   Tooltip,
   TooltipContent,
@@ -69,47 +71,20 @@ export function CollapsibleSidebar() {
     }
     return true;
   });
-  // const chains = useChains();
-  // const { address } = useAccount();
-  // const { data: balanceData, isLoading: isBalanceLoading } = useBalance({
-  //   address,
-  // });
-  // const { user, isLoading: isUserLoading } = useGetUser();
 
-  // Format balance to be more readable
-  // const balance = balanceData
-  //   ? Number(balanceData.formatted).toLocaleString(undefined, {
-  //     maximumFractionDigits: 4,
-  //     minimumFractionDigits: 0,
-  //   })
-  //   : '0';
+  const { publicKey, connected } = useWallet();
 
-  // const reputation = user?.reputation || BigInt(0);
-  // const reputationValue = Number(reputation.toString());
-
-  // Calculate next reputation milestone
-  const getNextMilestone = (rep) => {
-    const milestones = [100, 500, 1000, 2500, 5000, 10000];
-    return (
-      milestones.find((m) => m > rep) || milestones[milestones.length - 1] * 2
-    );
-  };
-
-  // const nextMilestone = getNextMilestone(reputationValue);
-  // const progressPercentage = Math.min(
-  //   100,
-  //   (reputationValue / nextMilestone) * 100
-  // );
-
-  // Save collapsed state to localStorage
-  useEffect(() => {
-    localStorage.setItem("sidebarCollapsed", JSON.stringify(isCollapsed));
-  }, [isCollapsed]);
+  // Generate random avatar based on wallet address
+  const randomAvatar = useMemo(() => {
+    if (!publicKey) return "";
+    const seed = publicKey.toBase58().slice(-8);
+    return `https://api.dicebear.com/7.x/avataaars/svg?seed=${seed}`;
+  }, [publicKey]);
 
   // Get first letter of address for avatar
-  // const addressFirstLetter = address
-  //   ? address.substring(2, 3).toUpperCase()
-  //   : '?';
+  const addressFirstLetter = publicKey
+    ? publicKey.toBase58().substring(2, 4).toUpperCase()
+    : '?';
 
   return (
     <div
@@ -123,53 +98,45 @@ export function CollapsibleSidebar() {
           <div className="space-y-6">
             {!isCollapsed ? (
               <Card className=" bg-gradient-to-br from-background to-muted/50 shadow-sm border-primary/10">
-                {/* <div className="flex items-center gap-3 mb-4">
-                  <div className="h-8 w-8">
-                    <CustomAvatar address={address} size={10} />
+                {/* <div className="p-5 space-y-4">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                      <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></div>
+                      <h3 className="font-semibold text-sm">Connected Wallet</h3>
+                    </div>
+                    <div className="px-2 py-1 rounded-full bg-emerald-500/10 text-emerald-500 text-xs font-medium">
+                      Active
+                    </div>
                   </div>
-                  <div className="flex-1 overflow-hidden">
-                    <p className="text-xs text-muted-foreground truncate">
-                      {address
-                        ? `${address.slice(0, 6)}...${address.slice(-4)}`
-                        : 'Not connected'}
-                    </p>
-                  </div>
-                </div>
-                <Separator className="my-3" />
-                <div className="space-y-4">
-                  <div>
-                    <div className="flex items-center justify-between mb-1">
+
+                  <div className="p-3 rounded-xl bg-black/5 space-y-3">
+                    <div className="flex items-center justify-between">
                       <div className="flex items-center gap-2">
                         <CircleDollarSign className="h-4 w-4 text-primary" />
-                        <span className="text-sm font-medium">Balance</span>
+                        <span className="text-sm">SOL Balance</span>
                       </div>
-                      <span className="font-semibold text-sm">
-                        {isBalanceLoading
-                          ? 'Loading...'
-                          : `${balance} ${chains[0]?.nativeCurrency?.symbol ?? ''
-                          }`}
-                      </span>
+                      <span className="font-medium">2.5 SOL</span>
                     </div>
-                  </div>
-                  <div>
-                    <div className="flex items-center justify-between mb-1">
+
+                    <div className="flex items-center justify-between">
                       <div className="flex items-center gap-2">
                         <Shield className="h-4 w-4 text-primary" />
-                        <span className="text-sm font-medium">Reputation</span>
+                        <span className="text-sm">Reputation</span>
                       </div>
-                      <span className="font-semibold text-sm">
-                        {isUserLoading
-                          ? 'Loading...'
-                          : `${reputationValue.toLocaleString()}`}
-                      </span>
-                    </div>
-                    <div className="space-y-1">
-                      <ProgressBar value={progressPercentage} />
-                      <p className="text-xs text-muted-foreground text-right">
-                        Next milestone: {nextMilestone.toLocaleString()}
-                      </p>
+                      <span className="font-medium">580 pts</span>
                     </div>
                   </div>
+
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="w-full justify-between items-center text-xs mt-1 border-dashed"
+                  >
+                    <span className="font-mono">
+                      {publicKey ? `${publicKey.toBase58().slice(0, 6)}...${publicKey.toBase58().slice(-4)}` : 'Not connected'}
+                    </span>
+                    <ExternalLinkIcon className="h-3 w-3 opacity-60" />
+                  </Button>
                 </div> */}
               </Card>
             ) : (
@@ -191,27 +158,18 @@ export function CollapsibleSidebar() {
                     className="flex flex-col gap-2 p-3 w-48"
                   >
                     <p className="text-xs text-muted-foreground truncate font-mono">
-                      {/* {address
-                        ? `${address.slice(0, 10)}...${address.slice(-6)}`
-                        : 'Not connected'} */}
+                      {publicKey
+                        ? `${publicKey.toBase58().slice(0, 10)}...${publicKey.toBase58().slice(-6)}`
+                        : 'Not connected'}
                     </p>
                     <Separator />
                     <div className="flex justify-between">
                       <span className="text-xs">Balance:</span>
-                      <span className="text-xs font-medium">
-                        {/* {isBalanceLoading
-                          ? '...'
-                          : `${balance} ${chains[0]?.nativeCurrency?.symbol ?? ''
-                          }`} */}
-                      </span>
+                      <span className="text-xs font-medium">2.5 SOL</span>
                     </div>
                     <div className="flex justify-between">
                       <span className="text-xs">Reputation:</span>
-                      <span className="text-xs font-medium">
-                        {/* {isUserLoading
-                          ? '...'
-                          : reputationValue.toLocaleString()} */}
-                      </span>
+                      <span className="text-xs font-medium">580 pts</span>
                     </div>
                   </TooltipContent>
                 </Tooltip>
@@ -271,6 +229,68 @@ export function CollapsibleSidebar() {
                 );
               })}
             </nav>
+
+            {/* Profile Section */}
+            <div className="mt-6 space-y-3">
+              {!isCollapsed ? (
+                <>
+                  <div className="flex items-center justify-between px-2">
+                    <h3 className="text-xs uppercase tracking-wider text-muted-foreground font-semibold">Your Profile</h3>
+                    <div className="h-px flex-1 bg-border/50 ml-2"></div>
+                  </div>
+
+                  <Card className="p-4 border border-border/40 bg-black/5 hover:bg-black/10 transition-colors duration-200 rounded-xl cursor-pointer">
+                    <Link href={`/users/${publicKey?.toBase58()}`}>
+                      <div className="flex items-center gap-3">
+                        <div className="w-10 h-10 rounded-full bg-gradient-to-br from-primary/30 to-primary/10 flex items-center justify-center ring-2 ring-background overflow-hidden">
+                          {randomAvatar ? (
+                            <img src={randomAvatar} alt="Profile" className="w-full h-full object-cover" />
+                          ) : (
+                            <span className="font-bold text-sm text-primary">{addressFirstLetter}</span>
+                          )}
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <h4 className="text-sm font-semibold truncate">
+                            {publicKey ? `${publicKey.toBase58().slice(0, 6)}...${publicKey.toBase58().slice(-4)}` : 'Not Connected'}
+                          </h4>
+                          <div className="flex items-center gap-2 mt-0.5">
+                            <div className={`h-2 w-2 rounded-full ${connected ? 'bg-green-500' : 'bg-gray-500'}`}></div>
+                            <p className="text-xs text-muted-foreground">
+                              {connected ? 'Connected' : 'Disconnected'}
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </Link>
+                  </Card>
+                </>
+              ) : (
+                <TooltipProvider delayDuration={200}>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <Link href={`/users/${publicKey?.toBase58()}`}>
+                        <Button
+                          variant="ghost"
+                          size="icon"
+                          className="w-full h-12 rounded-md mb-2"
+                        >
+                          <div className="w-8 h-8 rounded-full bg-gradient-to-br from-primary/30 to-primary/10 flex items-center justify-center ring-2 ring-background overflow-hidden">
+                            {randomAvatar ? (
+                              <img src={randomAvatar} alt="Profile" className="w-full h-full object-cover" />
+                            ) : (
+                              <span className="font-bold text-xs text-primary">{addressFirstLetter}</span>
+                            )}
+                          </div>
+                        </Button>
+                      </Link>
+                    </TooltipTrigger>
+                    <TooltipContent side="right">
+                      <p>View Profile</p>
+                    </TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
+              )}
+            </div>
           </div>
 
           <div className="mt-6 flex justify-center">

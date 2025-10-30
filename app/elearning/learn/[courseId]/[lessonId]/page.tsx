@@ -202,7 +202,369 @@ export default function LessonPlayerPage() {
     }
   };
 
-  const { course, currentLesson, nextLesson, prevLesson, completedLessons } =
+  // Get dynamic challenge content based on course
+  const getChallengeData = (course: Course | null) => {
+    if (!course) return null;
+
+    // Map course IDs to specific challenge configurations
+    const challengeConfigs = {
+      "1": { // Complete Blockchain Development Bootcamp
+        title: "Anchor Vault Challenge",
+        subtitle: "Build a secure vault smart contract",
+        objective: "Implement a Solana vault program using Anchor framework that allows users to securely deposit and withdraw SOL tokens.",
+        tasks: [
+          "Create an Anchor program with proper account structures",
+          "Implement deposit instruction to transfer SOL to vault PDA",
+          "Implement withdrawal instruction with proper authorization",
+          "Add comprehensive error handling and validation"
+        ],
+        acceptanceCriteria: [
+          "Program compiles without errors",
+          "Deposit instruction successfully transfers SOL to vault",
+          "Withdrawal only works for vault owner",
+          "Proper error messages for invalid operations"
+        ],
+        example: `Input: Deposit 1 SOL
+Expected output: Transaction successful, vault balance = 1 SOL
+
+Input: Withdraw 0.5 SOL (by owner)
+Expected output: Transaction successful, vault balance = 0.5 SOL
+
+Input: Withdraw 1 SOL (by non-owner)
+Expected output: Error - Unauthorized withdrawal attempt`,
+        tips: [
+          "Use Program Derived Addresses (PDAs) for vault accounts",
+          "Implement proper account validation in instruction handlers",
+          "Test with both success and failure scenarios",
+          "Follow Anchor's best practices for account management"
+        ],
+        challenges: [
+          {
+            title: "Challenge 1: Deposit Functionality",
+            description: "Implement deposit functionality allowing users to securely store SOL in their personal vault."
+          },
+          {
+            title: "Challenge 2: Withdrawal System",
+            description: "Create a withdrawal mechanism that allows vault owners to retrieve their deposited SOL."
+          }
+        ]
+      },
+      "2": { // React & Next.js Masterclass
+        title: "React dApp Challenge",
+        subtitle: "Build a React frontend for Solana interaction",
+        objective: "Create a modern React application that connects to Solana wallets and displays blockchain data using Next.js and wallet adapters.",
+        tasks: [
+          "Set up Next.js project with TypeScript and Tailwind CSS",
+          "Integrate @solana/wallet-adapter-react for wallet connections",
+          "Create wallet connection UI components",
+          "Implement transaction history display with real-time updates"
+        ],
+        acceptanceCriteria: [
+          "Application successfully connects to Phantom wallet",
+          "Wallet address and balance display correctly",
+          "Transaction history updates in real-time",
+          "Responsive design works on mobile and desktop"
+        ],
+        example: `Input: Connect Phantom wallet
+Expected output: Wallet address displayed, balance shown
+
+Input: Send transaction
+Expected output: Transaction appears in history with status updates`,
+        tips: [
+          "Use the wallet adapter hooks for connection state management",
+          "Implement proper error boundaries for wallet operations",
+          "Use React Query for caching blockchain data",
+          "Test with multiple wallet types (Phantom, Solflare)"
+        ],
+        challenges: [
+          {
+            title: "Challenge 1: Wallet Connection",
+            description: "Implement wallet connection functionality using @solana/wallet-adapter-react."
+          },
+          {
+            title: "Challenge 2: Transaction Display",
+            description: "Create a component to display and track Solana transactions in real-time."
+          }
+        ]
+      },
+      "3": { // DeFi Protocol Development
+        title: "DeFi Liquidity Pool",
+        subtitle: "Create an automated market maker pool",
+        objective: "Build an Automated Market Maker (AMM) liquidity pool smart contract that implements the constant product formula for token swaps.",
+        tasks: [
+          "Implement constant product formula (x * y = k)",
+          "Create liquidity provision mechanism",
+          "Build swap function with proper fee calculation",
+          "Add liquidity removal functionality"
+        ],
+        acceptanceCriteria: [
+          "Constant product invariant maintained after swaps",
+          "Liquidity providers receive correct LP tokens",
+          "Swap fees distributed to liquidity providers",
+          "Slippage protection implemented"
+        ],
+        example: `Input: Add liquidity (100 TokenA, 100 TokenB)
+Expected output: 100 LP tokens minted, pool reserves updated
+
+Input: Swap 10 TokenA for TokenB
+Expected output: ~9.09 TokenB received, 0.3% fee collected`,
+        tips: [
+          "Calculate output amount using constant product formula",
+          "Implement minimum output amount for slippage protection",
+          "Use fixed-point arithmetic for precision",
+          "Test with various input amounts and pool ratios"
+        ],
+        challenges: [
+          {
+            title: "Challenge 1: Pool Creation",
+            description: "Implement a liquidity pool that accepts two tokens and maintains the constant product formula."
+          },
+          {
+            title: "Challenge 2: Swap Mechanism",
+            description: "Build the swap functionality that allows users to exchange tokens through the pool."
+          }
+        ]
+      },
+      "4": { // Anchor Framework Deep Dive
+        title: "Advanced Anchor Vault",
+        subtitle: "Master Anchor with complex PDAs",
+        objective: "Create an advanced vault system using multiple Program Derived Addresses and cross-program invocations with SPL tokens.",
+        tasks: [
+          "Create multiple PDA accounts for different vault purposes",
+          "Implement SPL token transfers using cross-program calls",
+          "Add access control using PDAs as authorities",
+          "Create complex instruction handlers with multiple accounts"
+        ],
+        acceptanceCriteria: [
+          "All PDA derivations work correctly",
+          "Cross-program token transfers successful",
+          "Proper authority checks implemented",
+          "Complex multi-account instructions execute correctly"
+        ],
+        example: `Input: Create vault with SPL token support
+Expected output: Vault PDA created, token account initialized
+
+Input: Deposit SPL tokens to vault
+Expected output: Tokens transferred to vault, balance updated`,
+        tips: [
+          "Use anchor_lang::prelude::* for PDA utilities",
+          "Implement proper constraint checks on accounts",
+          "Test PDA derivation with different seeds",
+          "Handle token program errors appropriately"
+        ],
+        challenges: [
+          {
+            title: "Challenge 1: PDA-Based Vault",
+            description: "Create a vault system using Program Derived Addresses for secure account management."
+          },
+          {
+            title: "Challenge 2: Cross-Program Calls",
+            description: "Implement cross-program invocations to interact with SPL token programs."
+          }
+        ]
+      },
+      "5": { // Solana NFT Creation & Marketplace
+        title: "NFT Minting Contract",
+        subtitle: "Build an NFT creation and trading system",
+        objective: "Develop a complete NFT marketplace with minting, listing, and trading functionality using Metaplex standards.",
+        tasks: [
+          "Implement NFT minting with Metaplex Token Metadata",
+          "Create listing mechanism for NFT sales",
+          "Build purchase functionality with SOL payments",
+          "Add royalty distribution system"
+        ],
+        acceptanceCriteria: [
+          "NFTs mint with correct metadata and images",
+          "Marketplace listings display properly",
+          "Purchases transfer ownership correctly",
+          "Royalties paid to original creators"
+        ],
+        example: `Input: Mint NFT with metadata
+Expected output: NFT created with proper metadata
+
+Input: List NFT for 1 SOL
+Expected output: NFT listed on marketplace
+
+Input: Purchase NFT
+Expected output: Ownership transferred, payment received`,
+        tips: [
+          "Use Metaplex JS SDK for metadata handling",
+          "Implement proper NFT ownership verification",
+          "Add marketplace fees and royalty calculations",
+          "Test with different NFT types and prices"
+        ],
+        challenges: [
+          {
+            title: "Challenge 1: NFT Creation",
+            description: "Implement NFT minting functionality using Metaplex standards."
+          },
+          {
+            title: "Challenge 2: Marketplace Logic",
+            description: "Create buying and selling mechanisms for NFT trading."
+          }
+        ]
+      },
+      "6": { // Rust Programming for Blockchain
+        title: "Rust Smart Contract",
+        subtitle: "Write efficient Rust code for Solana",
+        objective: "Write optimized Rust code for Solana programs focusing on memory management, error handling, and performance.",
+        tasks: [
+          "Implement proper ownership and borrowing patterns",
+          "Create comprehensive error types and handling",
+          "Optimize for minimal compute unit usage",
+          "Add input validation and security checks"
+        ],
+        acceptanceCriteria: [
+          "Program compiles without warnings",
+          "All ownership rules followed correctly",
+          "Error messages are descriptive and helpful",
+          "Compute unit usage stays within limits"
+        ],
+        example: `Input: Process transaction with invalid data
+Expected output: Custom error type returned with descriptive message
+
+Input: Memory-intensive operation
+Expected output: Efficient memory usage, no leaks`,
+        tips: [
+          "Use Result<T, E> for all fallible operations",
+          "Implement Copy/Clone traits appropriately",
+          "Minimize heap allocations in hot paths",
+          "Use meaningful variable names and documentation"
+        ],
+        challenges: [
+          {
+            title: "Challenge 1: Memory Management",
+            description: "Implement proper ownership and borrowing patterns in a Solana program."
+          },
+          {
+            title: "Challenge 2: Error Handling",
+            description: "Create robust error handling and custom error types for program validation."
+          }
+        ]
+      },
+      "7": { // DeFi Yield Farming on Solana
+        title: "Yield Farming Protocol",
+        subtitle: "Build automated yield farming",
+        objective: "Create a yield farming protocol that distributes rewards to users based on their staking participation and duration.",
+        tasks: [
+          "Implement staking mechanism with lock periods",
+          "Create reward calculation based on staking time",
+          "Build automated reward distribution",
+          "Add emergency withdrawal functionality"
+        ],
+        acceptanceCriteria: [
+          "Staking deposits work correctly",
+          "Rewards calculate accurately over time",
+          "Automated distribution functions properly",
+          "Emergency withdrawals available when needed"
+        ],
+        example: `Input: Stake 100 tokens for 30 days
+Expected output: Staking position created
+
+Input: Check rewards after 15 days
+Expected output: 50 reward tokens earned
+
+Input: Unstake after 30 days
+Expected output: Principal + 100 rewards returned`,
+        tips: [
+          "Use timestamp-based reward calculations",
+          "Implement compound interest formulas",
+          "Add minimum staking periods",
+          "Test with different staking durations"
+        ],
+        challenges: [
+          {
+            title: "Challenge 1: Staking Mechanism",
+            description: "Implement a staking system that rewards users with yield tokens."
+          },
+          {
+            title: "Challenge 2: Reward Distribution",
+            description: "Create an automated reward distribution system based on staking duration."
+          }
+        ]
+      },
+      "8": { // Web3 Frontend with Solana
+        title: "Web3 Dashboard",
+        subtitle: "Create a comprehensive Web3 interface",
+        objective: "Build a comprehensive Web3 dashboard that displays real-time blockchain data and enables multi-signature transactions.",
+        tasks: [
+          "Connect to multiple RPC endpoints for data",
+          "Implement real-time data subscriptions",
+          "Create multi-signature transaction flow",
+          "Build responsive dashboard with multiple views"
+        ],
+        acceptanceCriteria: [
+          "Real-time data updates without manual refresh",
+          "Multi-signature transactions work correctly",
+          "Dashboard loads quickly and responsively",
+          "Error states handled gracefully"
+        ],
+        example: `Input: Load dashboard
+Expected output: Real-time balance and transaction data displayed
+
+Input: Create multi-sig transaction
+Expected output: Transaction requires multiple approvals`,
+        tips: [
+          "Use WebSocket connections for real-time updates",
+          "Implement optimistic UI updates",
+          "Cache data appropriately to reduce API calls",
+          "Test with slow network conditions"
+        ],
+        challenges: [
+          {
+            title: "Challenge 1: Real-time Data",
+            description: "Display real-time blockchain data and account balances."
+          },
+          {
+            title: "Challenge 2: Multi-sig Transactions",
+            description: "Implement multi-signature transaction approval system."
+          }
+        ]
+      },
+      "9": { // Solana Security Best Practices
+        title: "Secure Vault with Audits",
+        subtitle: "Build a thoroughly audited smart contract",
+        objective: "Develop a secure vault system with comprehensive access controls, reentrancy protection, and security best practices.",
+        tasks: [
+          "Implement multi-level access control system",
+          "Add reentrancy protection mechanisms",
+          "Create comprehensive input validation",
+          "Add emergency pause functionality"
+        ],
+        acceptanceCriteria: [
+          "All common vulnerabilities addressed",
+          "Access controls prevent unauthorized actions",
+          "Reentrancy attacks blocked",
+          "Emergency functions work when needed"
+        ],
+        example: `Input: Attempt reentrancy attack
+Expected output: Attack blocked, error returned
+
+Input: Emergency pause activated
+Expected output: All functions disabled except owner actions`,
+        tips: [
+          "Use Checks-Effects-Interactions pattern",
+          "Implement proper access modifiers",
+          "Add input sanitization for all user data",
+          "Test with known attack vectors"
+        ],
+        challenges: [
+          {
+            title: "Challenge 1: Access Control",
+            description: "Implement comprehensive access control and permission systems."
+          },
+          {
+            title: "Challenge 2: Reentrancy Protection",
+            description: "Add protection against reentrancy attacks and other common vulnerabilities."
+          }
+        ]
+      }
+    };
+
+    return challengeConfigs[course.id as keyof typeof challengeConfigs] || challengeConfigs["1"];
+  };
+
+  const { course, currentLesson, nextLesson, prevLesson, completedLessons, challengeData } =
     useMemo(() => {
       const course = mockCourses.find((c) => c.id === courseId);
       if (!course)
@@ -212,6 +574,7 @@ export default function LessonPlayerPage() {
           nextLesson: null,
           prevLesson: null,
           completedLessons: [],
+          challengeData: null,
         };
 
       // Flatten all lessons with section info
@@ -242,12 +605,15 @@ export default function LessonPlayerPage() {
         .slice(0, currentIndex)
         .map((l) => l.id);
 
+      const challengeData = getChallengeData(course);
+
       return {
         course,
         currentLesson,
         nextLesson,
         prevLesson,
         completedLessons,
+        challengeData,
       };
     }, [courseId, lessonId]);
 
@@ -408,97 +774,139 @@ export default function LessonPlayerPage() {
                 </div>
               </div>
 
-              {/* Challenge */}
+              {/* Challenge (markdown-style, minimal) */}
               <div className="mt-8">
                 <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
                   <TargetIcon className="h-5 w-5" />
                   Challenge
                 </h3>
+
                 <Card className="p-6">
-                  <div className="prose prose-gray dark:prose-invert max-w-none">
-                    <div className="space-y-4">
-                      <p className="text-muted-foreground">
-                        Put your knowledge to the test with this hands-on
-                        challenge designed to reinforce the concepts you've
-                        learned in this lesson.
-                      </p>
-
-                      <div className="bg-muted/50 p-4 rounded-lg">
-                        <h4 className="font-semibold text-foreground mb-2">
-                          🎯 Challenge Objective
-                        </h4>
-                        <p className="text-sm text-muted-foreground mb-3">
-                          Apply the concepts from this lesson to solve a
-                          real-world problem. This challenge will test your
-                          understanding and help you gain practical experience.
-                        </p>
-
-                        <h5 className="font-medium text-foreground mb-2">
-                          What you'll accomplish:
-                        </h5>
-                        <ul className="text-sm text-muted-foreground space-y-1 ml-4">
-                          <li>
-                            • Implement the key concepts covered in this lesson
-                          </li>
-                          <li>
-                            • Solve practical problems using the learned
-                            techniques
-                          </li>
-                          <li>
-                            • Demonstrate your understanding through hands-on
-                            coding
-                          </li>
-                          <li>• Receive immediate feedback on your solution</li>
-                        </ul>
+                  <div className="md:flex md:items-start md:gap-6">
+                    {/* Left: challenge content */}
+                    <div className="prose max-w-none md:flex-1">
+                      <div className="flex items-start gap-3">
+                        <div className="inline-flex items-center justify-center h-10 w-10 rounded-md bg-primary/10 text-primary shrink-0">
+                          <Target className="h-5 w-5" />
+                        </div>
+                        <div>
+                          <h4 className="mb-1">Challenge — Hands-on Practice</h4>
+                          <p className="text-sm text-muted-foreground">Put your knowledge to the test with a concise hands-on task that reinforces the lesson concepts.</p>
+                        </div>
                       </div>
 
-                      <div className="bg-blue-50 dark:bg-blue-950/20 p-4 rounded-lg border border-blue-200 dark:border-blue-800">
-                        <h5 className="font-medium text-blue-900 dark:text-blue-100 mb-2">
-                          💡 Challenge Tips
-                        </h5>
-                        <ul className="text-sm text-blue-800 dark:text-blue-200 space-y-1 ml-4">
-                          <li>
-                            • Review the lesson content if you need a refresher
-                          </li>
-                          <li>
-                            • Take your time to understand the problem before
-                            coding
-                          </li>
-                          <li>
-                            • Don't hesitate to experiment with different
-                            approaches
-                          </li>
-                          <li>
-                            • Use the provided resources and documentation
-                          </li>
+                      <section className="mt-4">
+                        <h5 className="mb-1">🎯 Objective</h5>
+                        <p className="text-sm">{challengeData?.objective || "Implement a working solution that applies the lesson's key techniques to a practical problem. Focus on correctness, clarity, and handling basic edge cases."}</p>
+                      </section>
+
+                      <section className="mt-4">
+                        <h5 className="mb-2">🛠 Tasks</h5>
+                        <ol className="list-decimal ml-6 space-y-1 text-sm">
+                          {challengeData?.tasks?.map((task: string, index: number) => (
+                            <li key={index}>{task}</li>
+                          )) || (
+                              <>
+                                <li>Read the challenge description and confirm expected behavior.</li>
+                                <li>Implement the core logic in code (follow the required language/runtime).</li>
+                                <li>Handle edge cases (empty input, invalid values).</li>
+                                <li>Provide sample input/output and at least one simple test.</li>
+                              </>
+                            )}
+                        </ol>
+                      </section>
+
+                      <section className="mt-4">
+                        <h5 className="mb-2">✅ Acceptance criteria</h5>
+                        <ul className="list-disc ml-6 space-y-1 text-sm">
+                          {challengeData?.acceptanceCriteria?.map((criteria: string, index: number) => (
+                            <li key={index}>{criteria}</li>
+                          )) || (
+                              <>
+                                <li>Code produces correct output for sample cases.</li>
+                                <li>Basic edge-cases are handled without runtime errors.</li>
+                                <li>Solution is readable and commented where necessary.</li>
+                              </>
+                            )}
                         </ul>
-                      </div>
+                      </section>
 
-                      <div className="pt-4 border-t border-border">
-                        <p className="text-sm text-muted-foreground mb-4">
-                          <strong>Estimated time:</strong> 15-30 minutes |{" "}
-                          <strong>Difficulty:</strong> Intermediate
-                        </p>
+                      <section className="mt-4">
+                        <h5 className="mb-2">🔎 Example</h5>
+                        <pre className="bg-muted/50 p-3 rounded text-xs font-mono overflow-x-auto whitespace-pre-wrap">
+                          {challengeData?.example || `Input:
+[1, -2, 3, null, 5]
 
+Expected output:
+9
+
+Explanation: sum of positive numbers only (1 + 3 + 5 = 9)`}
+                        </pre>
+                      </section>
+
+                      <section className="mt-4">
+                        <h5 className="mb-2">💡 Tips</h5>
+                        <ul className="list-disc ml-6 space-y-1 text-sm">
+                          {challengeData?.tips?.map((tip: string, index: number) => (
+                            <li key={index}>{tip}</li>
+                          )) || (
+                              <>
+                                <li>Start with a small, working example and expand.</li>
+                                <li>Write one test per important case (happy path, empty, invalid input).</li>
+                                <li>Keep functions small and well-named for readability.</li>
+                              </>
+                            )}
+                        </ul>
+                      </section>
+                    </div>
+
+                    {/* Right: compact stats & action */}
+                    <aside className="mt-6 md:mt-0 md:w-64">
+                      <div className="rounded-lg border border-border p-4 bg-background/60">
                         <div className="flex items-center justify-between">
+                          <div className="text-sm text-muted-foreground">Estimated</div>
+                          <div className="text-sm font-medium">15–30 min</div>
+                        </div>
+
+                        <div className="flex items-center justify-between mt-3">
+                          <div className="text-sm text-muted-foreground">Difficulty</div>
+                          <div className="text-sm font-medium">Intermediate</div>
+                        </div>
+
+                        <div className="mt-4">
+                          <div className="text-sm text-muted-foreground mb-2">Checklist</div>
+                          <ul className="space-y-2 text-sm">
+                            <li className="flex items-center gap-2">
+                              <span className="inline-flex items-center justify-center h-5 w-5 rounded-full bg-green-50 text-green-600">
+                                ✓
+                              </span>
+                              <span>Implement core logic</span>
+                            </li>
+                            <li className="flex items-center gap-2">
+                              <span className="inline-flex items-center justify-center h-5 w-5 rounded-full bg-green-50 text-green-600">✓</span>
+                              <span>Handle edge cases</span>
+                            </li>
+                            <li className="flex items-center gap-2">
+                              <span className="inline-flex items-center justify-center h-5 w-5 rounded-full bg-green-50 text-green-600">✓</span>
+                              <span>Provide sample tests</span>
+                            </li>
+                          </ul>
+                        </div>
+
+                        <div className="mt-4">
                           {isChallengeCompleted ? (
                             <div className="flex items-center gap-2">
                               <CheckCircle2 className="h-5 w-5 text-green-500" />
-                              <p className="text-green-600 font-medium">
-                                Challenge Completed! 🎉
-                              </p>
+                              <span className="text-sm font-medium text-green-600">Completed</span>
                             </div>
                           ) : (
-                            <p className="text-foreground font-medium">
-                              Ready to take the challenge?
-                            </p>
+                            <div className="text-sm text-muted-foreground">Not completed yet</div>
                           )}
+                        </div>
+
+                        <div className="mt-4">
                           <Button
-                            className={`ml-4 ${
-                              isChallengeCompleted
-                                ? "bg-green-600 hover:bg-green-700"
-                                : ""
-                            }`}
+                            className={`w-full ${isChallengeCompleted ? 'bg-green-600 hover:bg-green-700' : ''}`}
                             onClick={() => setIsChallengeOpen(true)}
                           >
                             {isChallengeCompleted ? (
@@ -515,7 +923,7 @@ export default function LessonPlayerPage() {
                           </Button>
                         </div>
                       </div>
-                    </div>
+                    </aside>
                   </div>
                 </Card>
               </div>
@@ -550,20 +958,18 @@ export default function LessonPlayerPage() {
               </div>
               <div className="w-full bg-muted rounded-full h-2">
                 <div
-                  className={`h-2 rounded-full transition-all duration-500 ${
-                    isChallengeCompleted ? "bg-green-500" : "bg-primary"
-                  }`}
+                  className={`h-2 rounded-full transition-all duration-500 ${isChallengeCompleted ? "bg-green-500" : "bg-primary"
+                    }`}
                   style={{
                     width: isChallengeCompleted
                       ? "100%"
-                      : `${
-                          (completedLessons.length /
-                            course.sections.reduce(
-                              (acc, s) => acc + s.lessons.length,
-                              0
-                            )) *
-                          100
-                        }%`,
+                      : `${(completedLessons.length /
+                        course.sections.reduce(
+                          (acc, s) => acc + s.lessons.length,
+                          0
+                        )) *
+                      100
+                      }%`,
                   }}
                 />
               </div>
@@ -599,9 +1005,8 @@ export default function LessonPlayerPage() {
                       <Link
                         key={lesson.id}
                         href={`/elearning/learn/${courseId}/${lesson.id}`}
-                        className={`flex items-center gap-3 p-3 hover:bg-accent/50 transition-colors ${
-                          isCurrent ? "bg-accent border-r-2 border-primary" : ""
-                        }`}
+                        className={`flex items-center gap-3 p-3 hover:bg-accent/50 transition-colors ${isCurrent ? "bg-accent border-r-2 border-primary" : ""
+                          }`}
                       >
                         <div className="flex items-center gap-2 flex-1">
                           {isCompleted ? (
@@ -613,9 +1018,8 @@ export default function LessonPlayerPage() {
                           <div className="flex items-center gap-2 flex-1">
                             {getLessonIcon(lesson.type)}
                             <span
-                              className={`text-sm ${
-                                isCurrent ? "font-medium" : ""
-                              }`}
+                              className={`text-sm ${isCurrent ? "font-medium" : ""
+                                }`}
                             >
                               {lesson.title}
                             </span>
@@ -641,7 +1045,7 @@ export default function LessonPlayerPage() {
           <DialogHeader>
             <DialogTitle className="flex items-center gap-2 text-xl">
               <Target className="h-5 w-5" />
-              Challenge: Anchor Vault
+              Challenge: {challengeData?.title || "Challenge"}
             </DialogTitle>
           </DialogHeader>
 
@@ -649,24 +1053,43 @@ export default function LessonPlayerPage() {
             {/* Challenge Description */}
             <div className="space-y-4">
               <div>
-                <h3 className="font-semibold mb-2">
-                  Challenge 1: Taking deposits
-                </h3>
-                <p className="text-sm text-muted-foreground">
-                  Your program should allow a user to deposit SOL into their own
-                  vault.
-                </p>
+                <h4 className="font-medium text-muted-foreground mb-2">
+                  {challengeData?.subtitle || "Complete the programming challenge"}
+                </h4>
               </div>
 
-              <div>
-                <h3 className="font-semibold mb-2">
-                  Challenge 2: Allowing withdrawal
-                </h3>
-                <p className="text-sm text-muted-foreground">
-                  The vault owner should be able to withdraw SOL from their
-                  vault.
-                </p>
-              </div>
+              {challengeData?.challenges.map((challenge, index) => (
+                <div key={index}>
+                  <h3 className="font-semibold mb-2">
+                    {challenge.title}
+                  </h3>
+                  <p className="text-sm text-muted-foreground">
+                    {challenge.description}
+                  </p>
+                </div>
+              )) || (
+                  <>
+                    <div>
+                      <h3 className="font-semibold mb-2">
+                        Challenge 1: Taking deposits
+                      </h3>
+                      <p className="text-sm text-muted-foreground">
+                        Your program should allow a user to deposit SOL into their own
+                        vault.
+                      </p>
+                    </div>
+
+                    <div>
+                      <h3 className="font-semibold mb-2">
+                        Challenge 2: Allowing withdrawal
+                      </h3>
+                      <p className="text-sm text-muted-foreground">
+                        The vault owner should be able to withdraw SOL from their
+                        vault.
+                      </p>
+                    </div>
+                  </>
+                )}
             </div>
 
             {/* Upload Section */}

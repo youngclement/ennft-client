@@ -1,9 +1,10 @@
 "use client"
 
 import { Card } from '@/components/ui/card'
-import { Award, Star, Target, TrendingUp, Users } from 'lucide-react'
+import { Award, Star, Target, TrendingUp, Users, BookOpen, Trophy, Zap } from 'lucide-react'
 import { motion } from 'framer-motion'
 import { useState, useEffect } from 'react'
+import { leaderboardStats } from '@/lib/data/mock-leaderboard'
 
 export function LeaderboardStats() {
   return (
@@ -104,23 +105,23 @@ function CountAnimation({ targetValue }: { targetValue: string }) {
 
 const stats = [
   {
-    title: "Total Reputation",
-    value: "3K2",
-    icon: Award
-  },
-  {
-    title: "Questions Solved",
-    value: "88",
-    icon: Target
-  },
-  {
-    title: "Active Users",
-    value: "160",
+    title: "Total Users",
+    value: leaderboardStats.totalUsers.toLocaleString(),
     icon: Users
   },
   {
-    title: "Expert Users",
-    value: "78",
+    title: "Active Learners",
+    value: leaderboardStats.activeUsers.toLocaleString(),
+    icon: TrendingUp
+  },
+  {
+    title: "Total Reputation",
+    value: leaderboardStats.totalReputation.toLocaleString(),
+    icon: Award
+  },
+  {
+    title: "Avg. Reputation",
+    value: leaderboardStats.averageReputation.toString(),
     icon: Star
   }
 ]

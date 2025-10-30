@@ -78,67 +78,57 @@ export default function ChallengeDetailPage() {
                     </div>
 
                     <div className="flex flex-col lg:flex-row gap-8">
-                        {/* Challenge Info */}
+                        {/* Challenge — simplified markdown-style view */}
                         <div className="flex-1">
-                            <div className="flex items-center gap-3 mb-4">
-                                <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center">
-                                    <Target className="h-8 w-8 text-primary" />
-                                </div>
-                                <div>
-                                    <Badge className={`${getLevelColor(challenge.level)} text-white border-0 mb-2`}>
-                                        {challenge.level}
-                                    </Badge>
-                                    <h1 className="text-3xl font-bold">{challenge.title}</h1>
-                                    <p className="text-lg text-muted-foreground">{challenge.subtitle}</p>
-                                </div>
-                            </div>
-
-                            <p className="text-muted-foreground mb-6 max-w-2xl">
-                                {challenge.description}
-                            </p>
-
-                            <div className="flex flex-wrap items-center gap-4 mb-6">
-                                <div className="flex items-center gap-2">
-                                    <Clock className="h-4 w-4 text-muted-foreground" />
-                                    <span className="text-sm">{challenge.estimatedTime} minutes</span>
+                            <Card className="p-6">
+                                <div className="flex items-center gap-3 mb-3">
+                                    <Target className="h-5 w-5" />
+                                    <h2 className="text-xl font-semibold">Challenge</h2>
                                 </div>
 
-                                <div className="flex items-center gap-2">
-                                    <Users className="h-4 w-4 text-muted-foreground" />
-                                    <span className="text-sm">{challenge.completionRate}% completed</span>
-                                </div>
+                                <article className="prose prose-sm max-w-none">
+                                    <h3 className="text-lg font-medium">{challenge.title}</h3>
+                                    {challenge.subtitle && (
+                                        <p className="text-sm text-muted-foreground">{challenge.subtitle}</p>
+                                    )}
 
-                                <div className="flex items-center gap-1">
-                                    {Array.from({ length: challenge.difficulty }).map((_, i) => (
-                                        <div key={i} className={`w-2 h-2 rounded-full ${getDifficultyColor(challenge.difficulty)}`} />
-                                    ))}
-                                    <span className="text-sm ml-2">Difficulty</span>
-                                </div>
-                            </div>
+                                    <p className="mt-2">{challenge.description}</p>
 
-                            <div className="flex flex-wrap gap-2 mb-6">
-                                {challenge.tags.map((tag) => (
-                                    <Badge key={tag} variant="secondary">
-                                        {tag}
-                                    </Badge>
-                                ))}
-                            </div>
+                                    <h4>What you'll accomplish</h4>
+                                    <ul>
+                                        {challenge.learningObjectives.slice(0, 5).map((o, i) => (
+                                            <li key={i}>{o}</li>
+                                        ))}
+                                    </ul>
 
-                            <div className="flex gap-3">
-                                <Button asChild>
-                                    <Link href={challenge.documentationUrl}>
-                                        <BookOpen className="h-4 w-4 mr-2" />
-                                        Read Documentation
-                                    </Link>
-                                </Button>
+                                    <h4>Tips</h4>
+                                    <ul>
+                                        <li>Review the lesson content if you need a refresher.</li>
+                                        <li>Read the documentation before coding.</li>
+                                        <li>Test your solution with edge cases.</li>
+                                    </ul>
 
-                                <Button variant="outline" asChild>
-                                    <Link href={challenge.challengeUrl}>
-                                        <Play className="h-4 w-4 mr-2" />
-                                        Start Challenge
-                                    </Link>
-                                </Button>
-                            </div>
+                                    <p className="text-sm mt-2 text-muted-foreground">
+                                        <strong>Estimated time:</strong> {challenge.estimatedTime} minutes • <strong>Difficulty:</strong> {challenge.difficulty}
+                                    </p>
+
+                                    {challenge.tags?.length > 0 && (
+                                        <p className="text-sm text-muted-foreground mt-2">Tags: {challenge.tags.join(', ')}</p>
+                                    )}
+
+                                    <div className="mt-4 flex gap-2">
+                                        <Button asChild>
+                                            <Link href={challenge.challengeUrl}>
+                                                Take Challenge
+                                            </Link>
+                                        </Button>
+
+                                        <Button variant="ghost" asChild>
+                                            <Link href={challenge.documentationUrl}>Read Docs</Link>
+                                        </Button>
+                                    </div>
+                                </article>
+                            </Card>
                         </div>
 
                         {/* Progress Card */}

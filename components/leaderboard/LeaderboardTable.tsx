@@ -24,32 +24,13 @@ import {
   TableRow,
 } from '@/components/ui/table';
 import { ProgressBar } from '../ui/progress';
-import { useGetUsers } from '@/lib/hooks/useGetUsers';
 import { Button } from '@/components/ui/button';
-import CustomAvatar from '../users/CustomAvatar';
+import { mockLeaderboard } from '@/lib/data/mock-leaderboard';
 
 export function LeaderboardTable() {
-  const { users, error, isLoading, pagination, changePage } = useGetUsers(5);
+  const leaderboardData = mockLeaderboard;
 
-  // Sort users by reputation (highest first) if users array exists
-  const sortedUsers = users
-    ? [...users].sort((a, b) => Number(b.reputation) - Number(a.reputation))
-    : [];
-
-  if (isLoading) {
-    return (
-      <Card className="p-8 border-0 shadow-2xl bg-card/90 backdrop-blur-md rounded-2xl">
-        <div className="flex flex-col items-center justify-center h-64 space-y-4">
-          <div className="w-16 h-16 border-4 border-primary/30 border-t-primary rounded-full animate-spin"></div>
-          <p className="text-center text-muted-foreground font-medium">
-            Loading leaderboard data...
-          </p>
-        </div>
-      </Card>
-    );
-  }
-
-  if (error || !sortedUsers || sortedUsers.length === 0) {
+  if (!leaderboardData || leaderboardData.length === 0) {
     return (
       <Card className="p-8 border-0 shadow-2xl bg-card/90 backdrop-blur-md rounded-2xl">
         <div className="flex flex-col items-center justify-center h-64 space-y-4">
@@ -57,7 +38,7 @@ export function LeaderboardTable() {
             <span className="text-destructive text-2xl">!</span>
           </div>
           <p className="text-center text-destructive font-medium">
-            Error loading leaderboard or no data available.
+            No leaderboard data available.
           </p>
         </div>
       </Card>
@@ -100,19 +81,19 @@ export function LeaderboardTable() {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {sortedUsers.map((user, index) => (
+            {leaderboardData.map((entry) => (
               <TableRow
-                key={user.userAddress}
+                key={entry.user.id}
                 className={cn(
                   'group transition-all duration-300 hover:bg-primary/5',
-                  index < 3
+                  entry.rank <= 3
                     ? 'bg-gradient-to-r from-primary/10 to-transparent'
                     : ''
                 )}
               >
                 <TableCell className="font-medium w-16 py-3">
-                  <div className="flex justify-center">
-                    {index < 3 ? (
+                  <div className="flex justify-center items-center gap-2">
+                    {entry.rank <= 3 ? (
                       <motion.div
                         whileHover={{
                           rotate: [0, -10, 10, -10, 0],
@@ -121,11 +102,21 @@ export function LeaderboardTable() {
                         transition={{ duration: 0.5 }}
                         className="drop-shadow-lg"
                       >
-                        <RankIcon rank={index + 1} />
+                        <RankIcon rank={entry.rank} />
                       </motion.div>
                     ) : (
                       <span className="text-muted-foreground font-semibold text-base">
-                        {index + 1}
+                        {entry.rank}
+                      </span>
+                    )}
+                    {entry.change !== 0 && (
+                      <span className={cn(
+                        'text-xs font-bold px-1.5 py-0.5 rounded-full',
+                        entry.change > 0
+                          ? 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400'
+                          : 'bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400'
+                      )}>
+                        {entry.change > 0 ? '↑' : '↓'}{Math.abs(entry.change)}
                       </span>
                     )}
                   </div>
@@ -140,38 +131,45 @@ export function LeaderboardTable() {
                       <Avatar
                         className={cn(
                           'h-10 w-10 ring-2 ring-offset-1 transition-all duration-300 group-hover:ring-offset-2 shadow-md',
-                          index === 0
+                          entry.rank === 1
                             ? 'ring-primary/70 group-hover:ring-primary'
-                            : index === 1
-                            ? 'ring-secondary/70 group-hover:ring-secondary'
-                            : index === 2
-                            ? 'ring-accent/70 group-hover:ring-accent'
-                            : 'ring-muted-foreground/30 group-hover:ring-muted-foreground/50'
+                            : entry.rank === 2
+                              ? 'ring-secondary/70 group-hover:ring-secondary'
+                              : entry.rank === 3
+                                ? 'ring-accent/70 group-hover:ring-accent'
+                                : 'ring-muted-foreground/30 group-hover:ring-muted-foreground/50'
                         )}
                       >
-                        {/* <AvatarImage
-                          src={`https://api.dicebear.com/7.x/identicon/svg?seed=${user.userAddress}`}
-                          alt="User avatar"
-                        /> */}
-                        <CustomAvatar address={user.userAddress} size={10} />
+                        <AvatarImage
+                          src={entry.user.avatar}
+                          alt={entry.user.displayName}
+                        />
                         <AvatarFallback className="bg-gradient-to-br from-muted to-muted/70 text-muted-foreground font-bold">
-                          {user.userAddress.slice(2, 4).toUpperCase()}
+                          {entry.user.displayName.slice(0, 2).toUpperCase()}
                         </AvatarFallback>
                       </Avatar>
                     </motion.div>
 
                     <div>
                       <div className="font-semibold text-foreground flex items-center gap-2 text-base">
-                        {user.userAddress.slice(0, 6) +
-                          '...' +
-                          user.userAddress.slice(-4)}
-                        <ReputationBadge points={Number(user.reputation)} />
+                        {entry.user.displayName}
+                        <span className={cn(
+                          'inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium',
+                          entry.user.isOnline
+                            ? 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400'
+                            : 'bg-gray-100 text-gray-800 dark:bg-gray-900/30 dark:text-gray-400'
+                        )}>
+                          <span className={cn(
+                            'w-1.5 h-1.5 rounded-full mr-1',
+                            entry.user.isOnline ? 'bg-green-500' : 'bg-gray-500'
+                          )} />
+                          {entry.user.isOnline ? 'Online' : 'Offline'}
+                        </span>
                       </div>
                       <div className="text-xs text-muted-foreground flex items-center gap-2 mt-1">
-                        <ActivityIcons
-                          answers={Number(user.answerCount)}
-                          solutions={Number(user.bestSolutionCount)}
-                        />
+                        <span>@{entry.user.username}</span>
+                        {entry.user.country && <span>• {entry.user.country}</span>}
+                        <span>• Level {entry.user.level}</span>
                       </div>
                     </div>
                   </div>
@@ -181,31 +179,31 @@ export function LeaderboardTable() {
                   <div className="space-y-2">
                     <div className="flex items-center justify-between text-xs">
                       <span className="text-muted-foreground font-medium">
-                        Contribution Level
+                        Reputation
                       </span>
-                      <span
-                        className={cn(
-                          'font-bold px-2 py-0.5 rounded-full text-xs',
-                          getLevelColor(Number(user.reputation))
-                        )}
-                      >
-                        {getContributionLevel(Number(user.reputation))}
+                      <span className="font-bold text-primary">
+                        {entry.user.reputation.toLocaleString()}
                       </span>
                     </div>
                     <ProgressBar
-                      value={getProgressValue(Number(user.reputation))}
+                      value={(entry.user.reputation / 600) * 100}
                     />
-                    <div className="flex text-xs text-muted-foreground gap-3 font-medium">
+                    <div className="grid grid-cols-2 gap-2 text-xs text-muted-foreground font-medium">
                       <span className="flex items-center gap-1">
                         <MessageCircle className="h-3 w-3" />
-                        {Number(user.answerCount)} answers
+                        {entry.user.stats.answersGiven} answers
                       </span>
                       <span className="flex items-center gap-1">
                         <Zap className="h-3 w-3" />
-                        {Number(user.bestSolutionCount)} solutions
+                        {entry.user.stats.questionsSolved} solved
                       </span>
-                      <span className="flex items-center gap-1 text-primary font-semibold">
-                        {Number(user.reputation).toLocaleString()} rep
+                      <span className="flex items-center gap-1">
+                        <Trophy className="h-3 w-3" />
+                        {entry.user.stats.challengesCompleted} challenges
+                      </span>
+                      <span className="flex items-center gap-1">
+                        <Award className="h-3 w-3" />
+                        {entry.user.badges.length} badges
                       </span>
                     </div>
                   </div>
@@ -215,34 +213,10 @@ export function LeaderboardTable() {
           </TableBody>
         </Table>
 
-        <div className="mt-8 flex justify-between items-center">
-          <Button
-            onClick={() => changePage(pagination.currentPage - 1)}
-            disabled={pagination.currentPage === 1}
-            variant="outline"
-            size="sm"
-            className="h-9 px-3 border-border/70 bg-card hover:bg-muted transition-all duration-200"
-          >
-            <ChevronLeft className="h-4 w-4 mr-1" />
-            Previous
-          </Button>
-
-          <div className="flex items-center justify-center px-3 py-1.5 rounded-md bg-muted/50 border border-border/50">
-            <span className="text-sm font-medium">
-              Page {pagination.currentPage} of {Number(pagination.totalPages)}
-            </span>
-          </div>
-
-          <Button
-            onClick={() => changePage(pagination.currentPage + 1)}
-            disabled={pagination.currentPage === Number(pagination.totalPages)}
-            variant="outline"
-            size="sm"
-            className="h-9 px-3 border-border/70 bg-card hover:bg-muted transition-all duration-200"
-          >
-            Next
-            <ChevronRight className="h-4 w-4 ml-1" />
-          </Button>
+        <div className="mt-6 text-center">
+          <p className="text-sm text-muted-foreground">
+            Showing top {leaderboardData.length} contributors
+          </p>
         </div>
       </div>
     </Card>

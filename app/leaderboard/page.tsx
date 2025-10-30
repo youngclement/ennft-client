@@ -12,12 +12,11 @@ export default function LeaderboardPage() {
   return (
     <div className="container mx-auto px-4 py-8 space-y-8">
       <LeaderboardHeader />
-      {/* <LeaderboardStats /> */}
+      <LeaderboardStats />
 
-      {/* <div className="grid lg:grid-cols-[240px,1fr] gap-8">
-        <LeaderboardFilters />
+      <div className="w-full">
         <LeaderboardTable />
-      </div> */}
+      </div>
     </div>
   );
 }

@@ -4,6 +4,8 @@ import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { Card } from "@/components/ui/card"
+import { useWallet } from "@solana/wallet-adapter-react"
+import { useMemo } from "react"
 import {
   Home,
   MessageSquare,
@@ -47,13 +49,15 @@ const sidebarItems: SidebarItem[] = [
 
 export function Sidebar() {
   const pathname = usePathname()
-  const [walletConnected, setWalletConnected] = useState(false)
   const [isHovering, setIsHovering] = useState<string | null>(null)
+  const { publicKey, connected } = useWallet()
 
-  const handleConnectWallet = () => {
-    // Implement wallet connection logic here
-    setWalletConnected(!walletConnected)
-  }
+  // Generate random avatar based on wallet address
+  const randomAvatar = useMemo(() => {
+    if (!publicKey) return "";
+    const seed = publicKey.toBase58().slice(-8);
+    return `https://api.dicebear.com/7.x/avataaars/svg?seed=${seed}`;
+  }, [publicKey]);
 
   return (
     <div className="hidden lg:block w-[280px] shrink-0 border-r bg-gradient-to-b from-background via-background to-secondary/5">
@@ -62,7 +66,7 @@ export function Sidebar() {
           <div className="space-y-8">
             {/* Wallet Connection Card */}
             <Card className="overflow-hidden border-none shadow-xl backdrop-blur-sm bg-gradient-to-br from-primary/5 via-secondary/10 to-background rounded-2xl">
-              {walletConnected ? (
+              {connected ? (
                 <div className="p-5 space-y-4">
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
@@ -198,20 +202,22 @@ export function Sidebar() {
                 <div className="h-px flex-1 bg-border/50 ml-2"></div>
               </div>
 
-              <Card className="p-4 border border-border/40 bg-black/5 hover:bg-black/10 transition-colors duration-200 rounded-xl cursor-pointer">
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-full bg-gradient-to-br from-primary/30 to-primary/10 flex items-center justify-center ring-2 ring-background">
-                    <span className="font-bold text-sm text-primary">JD</span>
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <h4 className="text-sm font-semibold truncate">John Doe</h4>
-                    <div className="flex items-center gap-2 mt-0.5">
-                      <div className="h-2 w-2 rounded-full bg-primary/80"></div>
-                      <p className="text-xs text-muted-foreground">Pro Member</p>
+              <Link href={`/users/${publicKey?.toBase58()}`}>
+                <Card className="p-4 border border-border/40 bg-black/5 hover:bg-black/10 transition-colors duration-200 rounded-xl cursor-pointer">
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-full bg-gradient-to-br from-primary/30 to-primary/10 flex items-center justify-center ring-2 ring-background">
+                      <span className="font-bold text-sm text-primary">JD</span>
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <h4 className="text-sm font-semibold truncate">John Doe</h4>
+                      <div className="flex items-center gap-2 mt-0.5">
+                        <div className="h-2 w-2 rounded-full bg-primary/80"></div>
+                        <p className="text-xs text-muted-foreground">Pro Member</p>
+                      </div>
                     </div>
                   </div>
-                </div>
-              </Card>
+                </Card>
+              </Link>
             </div>
           </div>
         </ScrollArea>

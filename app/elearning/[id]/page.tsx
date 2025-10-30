@@ -90,6 +90,39 @@ export default function CourseDetailPage() {
                                             {course.description}
                                         </p>
                                     </div>
+
+                                    {/* Course Level Badge */}
+                                    <div className="flex items-center gap-2 mb-4">
+                                        <Badge variant={course.level === 'beginner' ? 'secondary' : course.level === 'intermediate' ? 'default' : 'destructive'} className="capitalize">
+                                            {course.level} Level
+                                        </Badge>
+                                        <Badge variant="outline">{course.category}</Badge>
+                                        {course.featured && (
+                                            <Badge className="bg-gradient-to-r from-yellow-400 to-orange-500 text-white">
+                                                ⭐ Featured Course
+                                            </Badge>
+                                        )}
+                                    </div>
+
+                                    {/* Course Stats */}
+                                    <div className="grid grid-cols-2 md:grid-cols-4 gap-4 p-4 bg-muted/30 rounded-lg">
+                                        <div className="text-center">
+                                            <div className="text-2xl font-bold text-primary">{course.students.toLocaleString()}</div>
+                                            <div className="text-sm text-muted-foreground">Students</div>
+                                        </div>
+                                        <div className="text-center">
+                                            <div className="text-2xl font-bold text-primary">{course.rating}</div>
+                                            <div className="text-sm text-muted-foreground">Rating</div>
+                                        </div>
+                                        <div className="text-center">
+                                            <div className="text-2xl font-bold text-primary">{Math.floor(course.duration / 60)}h</div>
+                                            <div className="text-sm text-muted-foreground">Duration</div>
+                                        </div>
+                                        <div className="text-center">
+                                            <div className="text-2xl font-bold text-primary">{course.sections.length}</div>
+                                            <div className="text-sm text-muted-foreground">Sections</div>
+                                        </div>
+                                    </div>
                                 </Card>
 
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -147,22 +180,48 @@ export default function CourseDetailPage() {
                                     </Card>
                                 </div>
 
-                                <Card className="p-6">
-                                    <h4 className="text-lg font-semibold mb-4">Requirements</h4>
-                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                        {course.requirements.map((requirement, index) => (
-                                            <div key={index} className="flex items-start gap-3 p-3 bg-muted/50 rounded-lg">
-                                                <div className="w-2 h-2 bg-muted-foreground rounded-full mt-2 flex-shrink-0" />
-                                                <span className="text-sm">{requirement}</span>
-                                            </div>
-                                        ))}
-                                    </div>
-                                </Card>
+                                {/* Prerequisites and Requirements */}
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                    <Card className="p-6">
+                                        <h4 className="text-lg font-semibold mb-4">Requirements</h4>
+                                        <div className="space-y-3">
+                                            {course.requirements.map((requirement, index) => (
+                                                <div key={index} className="flex items-start gap-3 p-3 bg-muted/50 rounded-lg">
+                                                    <div className="w-2 h-2 bg-muted-foreground rounded-full mt-2 flex-shrink-0" />
+                                                    <span className="text-sm">{requirement}</span>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    </Card>
 
+                                    <Card className="p-6">
+                                        <h4 className="text-lg font-semibold mb-4">Course Tags</h4>
+                                        <div className="flex flex-wrap gap-2">
+                                            {course.tags.map((tag) => (
+                                                <Badge key={tag} variant="outline" className="text-xs">
+                                                    {tag}
+                                                </Badge>
+                                            ))}
+                                        </div>
+
+                                        <div className="mt-4 pt-4 border-t border-border">
+                                            <h5 className="text-sm font-semibold mb-2">Last Updated</h5>
+                                            <p className="text-sm text-muted-foreground">
+                                                {new Date(course.updatedAt).toLocaleDateString('en-US', {
+                                                    year: 'numeric',
+                                                    month: 'long',
+                                                    day: 'numeric'
+                                                })}
+                                            </p>
+                                        </div>
+                                    </Card>
+                                </div>
+
+                                {/* Instructor Section with more details */}
                                 <Card className="p-6">
-                                    <h3 className="text-xl font-semibold mb-4">Instructor</h3>
-                                    <div className="flex items-start gap-4">
-                                        <div className="w-20 h-20 rounded-full overflow-hidden bg-muted">
+                                    <h3 className="text-xl font-semibold mb-4">About the Instructor</h3>
+                                    <div className="flex items-start gap-6">
+                                        <div className="w-24 h-24 rounded-full overflow-hidden bg-muted flex-shrink-0">
                                             <img
                                                 src={course.instructor.avatar}
                                                 alt={course.instructor.name}
@@ -170,15 +229,78 @@ export default function CourseDetailPage() {
                                             />
                                         </div>
                                         <div className="flex-1">
-                                            <h4 className="text-lg font-semibold mb-2">{course.instructor.name}</h4>
-                                            <p className="text-muted-foreground mb-3">{course.instructor.bio}</p>
-                                            <div className="flex items-center gap-4 text-sm">
-                                                <div className="flex items-center gap-1">
-                                                    <span className="font-medium">{course.instructor.rating}</span>
-                                                    <span>Instructor Rating</span>
+                                            <h4 className="text-xl font-semibold mb-2">{course.instructor.name}</h4>
+                                            <p className="text-muted-foreground mb-4 leading-relaxed">{course.instructor.bio}</p>
+
+                                            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4">
+                                                <div className="text-center p-3 bg-muted/30 rounded-lg">
+                                                    <div className="text-lg font-bold text-primary">{course.instructor.rating}</div>
+                                                    <div className="text-xs text-muted-foreground">Rating</div>
                                                 </div>
-                                                <div>{course.instructor.students.toLocaleString()} students</div>
-                                                <div>{course.instructor.courses} courses</div>
+                                                <div className="text-center p-3 bg-muted/30 rounded-lg">
+                                                    <div className="text-lg font-bold text-primary">{course.instructor.students.toLocaleString()}</div>
+                                                    <div className="text-xs text-muted-foreground">Students</div>
+                                                </div>
+                                                <div className="text-center p-3 bg-muted/30 rounded-lg">
+                                                    <div className="text-lg font-bold text-primary">{course.instructor.courses}</div>
+                                                    <div className="text-xs text-muted-foreground">Courses</div>
+                                                </div>
+                                                <div className="text-center p-3 bg-muted/30 rounded-lg">
+                                                    <div className="text-lg font-bold text-primary">4.9</div>
+                                                    <div className="text-xs text-muted-foreground">Avg Rating</div>
+                                                </div>
+                                            </div>
+
+                                            <div className="flex items-center gap-4 text-sm text-muted-foreground">
+                                                <span>📧 Available for questions</span>
+                                                <span>💬 Quick response time</span>
+                                                <span>🏆 Top instructor</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </Card>
+
+                                {/* Course Benefits */}
+                                <Card className="p-6">
+                                    <h3 className="text-xl font-semibold mb-4">Why Take This Course?</h3>
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                        <div className="flex items-start gap-3">
+                                            <div className="w-8 h-8 bg-green-100 dark:bg-green-900/30 rounded-lg flex items-center justify-center flex-shrink-0">
+                                                <span className="text-green-600 dark:text-green-400 text-lg">✓</span>
+                                            </div>
+                                            <div>
+                                                <h4 className="font-medium">Certificate of Completion</h4>
+                                                <p className="text-sm text-muted-foreground">Earn a blockchain-verified certificate</p>
+                                            </div>
+                                        </div>
+
+                                        <div className="flex items-start gap-3">
+                                            <div className="w-8 h-8 bg-blue-100 dark:bg-blue-900/30 rounded-lg flex items-center justify-center flex-shrink-0">
+                                                <span className="text-blue-600 dark:text-blue-400 text-lg">∞</span>
+                                            </div>
+                                            <div>
+                                                <h4 className="font-medium">Lifetime Access</h4>
+                                                <p className="text-sm text-muted-foreground">Learn at your own pace</p>
+                                            </div>
+                                        </div>
+
+                                        <div className="flex items-start gap-3">
+                                            <div className="w-8 h-8 bg-purple-100 dark:bg-purple-900/30 rounded-lg flex items-center justify-center flex-shrink-0">
+                                                <span className="text-purple-600 dark:text-purple-400 text-lg">💻</span>
+                                            </div>
+                                            <div>
+                                                <h4 className="font-medium">Mobile Friendly</h4>
+                                                <p className="text-sm text-muted-foreground">Learn on any device</p>
+                                            </div>
+                                        </div>
+
+                                        <div className="flex items-start gap-3">
+                                            <div className="w-8 h-8 bg-orange-100 dark:bg-orange-900/30 rounded-lg flex items-center justify-center flex-shrink-0">
+                                                <span className="text-orange-600 dark:text-orange-400 text-lg">🎯</span>
+                                            </div>
+                                            <div>
+                                                <h4 className="font-medium">Hands-on Projects</h4>
+                                                <p className="text-sm text-muted-foreground">Build real-world applications</p>
                                             </div>
                                         </div>
                                     </div>

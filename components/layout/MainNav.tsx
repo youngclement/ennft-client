@@ -13,7 +13,7 @@ import {
 import { useTheme } from "next-themes";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { useWallet, useConnection } from "@solana/wallet-adapter-react";
 import { LAMPORTS_PER_SOL } from "@solana/web3.js";
 import { truncateAddress } from "@/lib/utils";
@@ -49,6 +49,13 @@ export function MainNav() {
 
   const addressLabel = publicKey ? truncateAddress(publicKey.toBase58()) : "";
 
+  // Generate random avatar based on wallet address
+  const randomAvatar = useMemo(() => {
+    if (!publicKey) return "";
+    const seed = publicKey.toBase58().slice(-8);
+    return `https://api.dicebear.com/7.x/avataaars/svg?seed=${seed}`;
+  }, [publicKey]);
+
   useEffect(() => {
     let mounted = true;
     let interval: ReturnType<typeof setInterval> | null = null;
@@ -80,15 +87,14 @@ export function MainNav() {
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled
-          ? "bg-background/80 backdrop-blur-lg shadow-lg"
-          : "bg-transparent"
-      }`}
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled
+        ? "bg-background/80 backdrop-blur-lg shadow-lg"
+        : "bg-transparent"
+        }`}
     >
       <div className="container mx-auto px-4 h-16 flex items-center justify-between">
         <div className="flex items-center gap-6">
-            <Link href="/" className="flex items-center gap-2">
+          <Link href="/" className="flex items-center gap-2">
             <Logo />
 
             <span className="font-bold text-xl text-gray-900 dark:text-gray-100">
@@ -186,7 +192,7 @@ export function MainNav() {
                 <DropdownMenuTrigger asChild>
                   <Button variant="ghost" size="icon" className="rounded-full">
                     <Avatar className="h-8 w-8">
-                      <AvatarImage src="" alt="Profile" />
+                      <AvatarImage src={randomAvatar} alt="Profile" />
                       <AvatarFallback>
                         <User className="h-4 w-4" />
                       </AvatarFallback>
@@ -198,6 +204,13 @@ export function MainNav() {
                   <DropdownMenuLabel className="font-mono text-xs">
                     {addressLabel}
                   </DropdownMenuLabel>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem asChild>
+                    <Link href={`/users/${publicKey?.toBase58()}`} className="flex items-center gap-2">
+                      <User className="h-4 w-4" />
+                      Profile
+                    </Link>
+                  </DropdownMenuItem>
                   <DropdownMenuSeparator />
                   <DropdownMenuItem
                     onClick={() => disconnect()}
@@ -227,7 +240,7 @@ function ConnectWalletButton() {
   return (
     <WalletMultiButtonDynamic
       className="!bg-primary"
-      // className={buttonVariants({ size: "sm" })}
+    // className={buttonVariants({ size: "sm" })}
     />
   );
 }

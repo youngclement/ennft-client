@@ -1,10 +1,10 @@
-'use client';
+"use client";
 
-import { useEffect, useState } from 'react';
-import { Address } from 'viem';
-import { useReadContract } from 'wagmi';
-import { contractABI } from '../contracts/contractABI';
-import { User } from '../types/SmartContractType';
+import { useEffect, useState } from "react";
+import { Address } from "viem";
+import { useReadContract } from "wagmi";
+import { contractABI } from "../contracts/contractABI";
+import { User } from "../types/SmartContractType";
 
 export function useGetUsers(initialPageSize = 10) {
   const [page, setPage] = useState(1);
@@ -19,7 +19,7 @@ export function useGetUsers(initialPageSize = 10) {
   } = useReadContract({
     address: process.env.NEXT_PUBLIC_CONTRACT_ADDRESS as Address,
     abi: contractABI,
-    functionName: 'getUsers',
+    functionName: "getUsers",
     args: [page, pageSize],
     query: {
       enabled: true,
