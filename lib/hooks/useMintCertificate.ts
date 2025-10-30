@@ -20,15 +20,12 @@ export const useMintCertificate = () => {
       return response.data;
     },
     onSuccess: (data) => {
-      toast.success("Certificate NFT minted successfully!");
+      toast.success("Certificate minted successfully");
       queryClient.invalidateQueries({ queryKey: ["certificates"] });
     },
     onError: (error) => {
       console.error("Error minting certificate:", error);
-      const errorMessage = error instanceof Error
-        ? error.message
-        : "Failed to mint certificate NFT";
-      toast.error(errorMessage);
+      toast.error("Failed to mint certificate");
     },
   });
 };

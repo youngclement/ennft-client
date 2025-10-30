@@ -1,8 +1,12 @@
 import axios, { AxiosResponse } from "axios";
 import { ApiResponse } from "./dto/apiReponse";
-import { MintCertificateData, MintCertificateResponse } from "./dto/certificate/certificate.mint";
+import {
+  MintCertificateData,
+  MintCertificateResponse,
+} from "./dto/certificate/certificate.mint";
 
-export const BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000";
+export const BASE_URL =
+  process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000";
 
 export async function mintCertificate(
   data: MintCertificateData
