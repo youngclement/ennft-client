@@ -60,7 +60,7 @@ export default function LessonPlayerPage() {
   const { publicKey } = useWallet();
 
   // Load challenge completion status from localStorage on component mount
-  useMemo(() => {
+  useEffect(() => {
     if (typeof window !== "undefined") {
       const storageKey = `challenge_completed_${courseId}_${lessonId}`;
       const completed = localStorage.getItem(storageKey) === "true";
@@ -160,6 +160,13 @@ export default function LessonPlayerPage() {
   const handleMintCertificate = async () => {
     if (!isChallengeCompleted) return;
 
+    // Check if wallet is connected
+    if (!publicKey) {
+      console.error("Wallet not connected");
+      alert("Please connect your Solana wallet before minting the certificate");
+      return;
+    }
+
     try {
       const result = await mintCertificateMutation.mutateAsync({
         name: "Kien",
@@ -199,6 +206,13 @@ export default function LessonPlayerPage() {
       console.log("Certificate minted successfully:", result);
     } catch (error) {
       console.error("Error minting certificate:", error);
+
+      // Show user-friendly error message
+      const errorMessage = error instanceof Error
+        ? error.message
+        : "Failed to mint certificate. Please try again.";
+
+      alert(`Minting failed: ${errorMessage}`);
     }
   };
 

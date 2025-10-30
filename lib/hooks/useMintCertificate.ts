@@ -25,7 +25,10 @@ export const useMintCertificate = () => {
     },
     onError: (error) => {
       console.error("Error minting certificate:", error);
-      toast.error("Failed to mint certificate NFT");
+      const errorMessage = error instanceof Error
+        ? error.message
+        : "Failed to mint certificate NFT";
+      toast.error(errorMessage);
     },
   });
 };

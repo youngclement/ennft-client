@@ -55,6 +55,19 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    // Validate environment variables
+    if (!process.env.CREATOR_WALLET_ADDRESS) {
+      console.error("CREATOR_WALLET_ADDRESS environment variable is not set");
+      return NextResponse.json<ApiResponse<null>>(
+        {
+          code: 500,
+          message: "Server configuration error: Creator wallet address not configured",
+          result: null,
+        },
+        { status: 500 }
+      );
+    }
+
     const umi = createUmi(
       process.env.SOLANA_RPC_URL || "https://api.devnet.solana.com"
     ).use(keypairIdentity(fromWeb3JsKeypair(keypair)));
@@ -142,6 +155,12 @@ export async function POST(request: NextRequest) {
     console.log("keypair", keypair.publicKey.toBase58());
 
     // Create the NFT
+    console.log("Creating NFT with metadata:", {
+      name: metadata.name,
+      uri: metadataUri,
+      owner: body.recipientWallet || keypair.publicKey.toBase58(),
+    });
+
     const result = await create(umi, {
       asset: assetSigner,
       name: metadata.name,
@@ -149,6 +168,11 @@ export async function POST(request: NextRequest) {
       // If recipientWallet is provided, mint to that wallet, otherwise mint to creator
       ...(body.recipientWallet && { owner: publicKey(body.recipientWallet) }),
     }).sendAndConfirm(umi);
+
+    console.log("NFT created successfully:", {
+      assetId: assetSigner.publicKey.toString(),
+      signature: result.signature.toString(),
+    });
 
     const response: MintCertificateResponse = {
       assetId: assetSigner.publicKey.toString(),
