@@ -46,7 +46,7 @@ Any code examples or best practices would be greatly appreciated!`,
     isClosed: false,
     chosenAnswerId: -1,
     deadline: new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString(),
-    tags: ["solana", "rust", "anchor", "smart-contract", "blockchain"]
+    tags: ["solana", "rust", "anchor", "smart-contract", "blockchain"],
   },
   {
     id: "2",
@@ -67,12 +67,13 @@ I've seen some programs use macros for error handling. Is that recommended?`,
     isClosed: true,
     chosenAnswerId: 1,
     deadline: new Date(Date.now() + 48 * 60 * 60 * 1000).toISOString(),
-    tags: ["rust", "solana", "error-handling", "best-practices"]
+    tags: ["rust", "solana", "error-handling", "best-practices"],
   },
   {
     id: "3",
     asker: "0x4a2d8f7c3b9e15684d2c8f5a1b3e9d2c",
-    questionText: "How to implement PDAs (Program Derived Addresses) in Solana?",
+    questionText:
+      "How to implement PDAs (Program Derived Addresses) in Solana?",
     questionContent: `I'm building a decentralized exchange on Solana and need to understand how to properly implement PDAs for user accounts and escrow functionality.
 
 I understand that PDAs allow programs to sign transactions, but I'm confused about:
@@ -88,7 +89,7 @@ Can someone explain the concept with practical examples? I want to avoid common 
     isClosed: false,
     chosenAnswerId: -1,
     deadline: new Date(Date.now() + 72 * 60 * 60 * 1000).toISOString(),
-    tags: ["solana", "pdas", "security", "rust", "blockchain"]
+    tags: ["solana", "pdas", "security", "rust", "blockchain"],
   },
   {
     id: "4",
@@ -109,7 +110,7 @@ Can someone explain how ownership works in the context of Solana programs with c
     isClosed: false,
     chosenAnswerId: -1,
     deadline: new Date(Date.now() + 36 * 60 * 60 * 1000).toISOString(),
-    tags: ["rust", "solana", "ownership", "borrowing", "performance"]
+    tags: ["rust", "solana", "ownership", "borrowing", "performance"],
   },
   {
     id: "5",
@@ -131,12 +132,13 @@ I want to implement a token swap function that calls the token program. Any deta
     isClosed: false,
     chosenAnswerId: -1,
     deadline: new Date(Date.now() + 60 * 60 * 60 * 1000).toISOString(),
-    tags: ["solana", "anchor", "cpi", "spl-token", "rust"]
+    tags: ["solana", "anchor", "cpi", "spl-token", "rust"],
   },
   {
     id: "6",
     asker: "0x7q8w9e0r1t2y3u4i5o6p7a8s9d0f1g2h",
-    questionText: "Optimizing compute units and transaction fees in Solana programs",
+    questionText:
+      "Optimizing compute units and transaction fees in Solana programs",
     questionContent: `My Solana program is exceeding compute unit limits and users are complaining about high fees. I need to optimize both performance and cost.
 
 Current issues:
@@ -158,12 +160,13 @@ Are there any benchmarking tools or best practices for measuring and optimizing 
     isClosed: false,
     chosenAnswerId: -1,
     deadline: new Date(Date.now() + 48 * 60 * 60 * 1000).toISOString(),
-    tags: ["solana", "performance", "optimization", "rust", "compute-units"]
+    tags: ["solana", "performance", "optimization", "rust", "compute-units"],
   },
   {
     id: "7",
     asker: "0x3z4x5c6v7b8n9m0l1k2j3h4g5f6d7s8a",
-    questionText: "Building a React frontend for Solana dApps with wallet integration",
+    questionText:
+      "Building a React frontend for Solana dApps with wallet integration",
     questionContent: `I'm building a React application that interacts with Solana programs. I'm using @solana/wallet-adapter-react but having issues with state management and transaction handling.
 
 Challenges:
@@ -180,7 +183,7 @@ What's the best architecture for a Solana dApp frontend? Should I use Redux, Zus
     isClosed: false,
     chosenAnswerId: -1,
     deadline: new Date(Date.now() + 30 * 60 * 60 * 1000).toISOString(),
-    tags: ["react", "solana", "wallet-adapter", "frontend", "typescript"]
+    tags: ["react", "solana", "wallet-adapter", "frontend", "typescript"],
   },
   {
     id: "8",
@@ -202,7 +205,7 @@ Can someone show me how to implement a derive macro that automatically generates
     isClosed: false,
     chosenAnswerId: -1,
     deadline: new Date(Date.now() + 84 * 60 * 60 * 1000).toISOString(),
-    tags: ["rust", "macros", "solana", "procedural-macros", "metaprogramming"]
+    tags: ["rust", "macros", "solana", "procedural-macros", "metaprogramming"],
   },
   {
     id: "9",
@@ -225,7 +228,7 @@ Are there any security considerations I should be aware of? What's the recommend
     isClosed: false,
     chosenAnswerId: -1,
     deadline: new Date(Date.now() + 96 * 60 * 60 * 1000).toISOString(),
-    tags: ["solana", "nft", "metaplex", "marketplace", "blockchain"]
+    tags: ["solana", "nft", "metaplex", "marketplace", "blockchain"],
   },
   {
     id: "10",
@@ -247,8 +250,8 @@ What's the best way to structure async Rust code for Solana clients? Are there a
     isClosed: false,
     chosenAnswerId: -1,
     deadline: new Date(Date.now() + 42 * 60 * 60 * 1000).toISOString(),
-    tags: ["rust", "async", "solana", "client", "concurrency"]
-  }
+    tags: ["rust", "async", "solana", "client", "concurrency"],
+  },
 ];
 
 export const mockAnswers: Record<string, MockAnswer[]> = {
@@ -256,7 +259,8 @@ export const mockAnswers: Record<string, MockAnswer[]> = {
     {
       id: "1",
       responder: "0x8ba1f109551bD43280301264526176D9",
-      answerText: "Setting up an Anchor project is straightforward. Here's a complete guide:",
+      answerText:
+        "Setting up an Anchor project is straightforward. Here's a complete guide:",
       answerContent: `Here's a step-by-step guide to create your first Solana program with Anchor:
 
 ## 1. Install Dependencies
@@ -367,12 +371,13 @@ This should get you started! Make sure to read the Anchor documentation for adva
       rewardAmount: 0,
       author: "SolanaDev",
       createdAt: Math.floor(Date.now() / 1000) - 86400 * 1,
-      isAccepted: false
+      isAccepted: false,
     },
     {
       id: "2",
       responder: "0x4a2d8f7c3b9e15684d2c8f5a1b3e9d2c",
-      answerText: "Don't forget about proper error handling and security considerations!",
+      answerText:
+        "Don't forget about proper error handling and security considerations!",
       answerContent: `Great answer! I'd like to add some important security and error handling considerations:
 
 ## Security Best Practices:
@@ -413,14 +418,15 @@ Also, make sure to test with different account states and edge cases before depl
       rewardAmount: 0,
       author: "SecurityFirst",
       createdAt: Math.floor(Date.now() / 1000) - 86400 * 1,
-      isAccepted: false
-    }
+      isAccepted: false,
+    },
   ],
   "2": [
     {
       id: "1",
       responder: "0x742d35Cc6634C0532925a3b844Bc454e4438f44e",
-      answerText: "For Solana programs, I recommend using custom error types with Anchor's error_code macro.",
+      answerText:
+        "For Solana programs, I recommend using custom error types with Anchor's error_code macro.",
       answerContent: `Here's how I structure error handling in my Solana programs:
 
 ## Custom Error Types
@@ -492,12 +498,13 @@ This approach makes your program more robust and user-friendly.`,
       rewardAmount: 75,
       author: "RustExpert",
       createdAt: Math.floor(Date.now() / 1000) - 86400 * 4,
-      isAccepted: true
+      isAccepted: true,
     },
     {
       id: "2",
       responder: "0x9c8b7a6d5e4f3g2h1i0j9k8l7m6n5o",
-      answerText: "I prefer using the thiserror crate for more flexible error handling.",
+      answerText:
+        "I prefer using the thiserror crate for more flexible error handling.",
       answerContent: `While Anchor's error_code is convenient, sometimes you need more flexibility. Here's how to use thiserror with Solana:
 
 ## Using thiserror
@@ -537,14 +544,15 @@ However, keep in mind that Solana programs have limited space, so balance betwee
       rewardAmount: 0,
       author: "ErrorHandler",
       createdAt: Math.floor(Date.now() / 1000) - 86400 * 3,
-      isAccepted: false
-    }
+      isAccepted: false,
+    },
   ],
   "3": [
     {
       id: "1",
       responder: "0x8ba1f109551bD43280301264526176D9",
-      answerText: "PDAs are crucial for Solana programs. Let me explain with examples:",
+      answerText:
+        "PDAs are crucial for Solana programs. Let me explain with examples:",
       answerContent: `Program Derived Addresses (PDAs) are addresses derived from a program ID and optional seeds. They allow programs to sign transactions.
 
 ## Basic PDA Derivation
@@ -607,14 +615,15 @@ Always validate PDA ownership and derivation in your account constraints!`,
       rewardAmount: 0,
       author: "PDAMaster",
       createdAt: Math.floor(Date.now() / 1000) - 86400 * 1,
-      isAccepted: false
-    }
+      isAccepted: false,
+    },
   ],
   "4": [
     {
       id: "1",
       responder: "0x7q8w9e0r1t2y3u4i5o6p7a8s9d0f1g2h",
-      answerText: "Rust ownership in Solana is different from traditional apps. Let me explain:",
+      answerText:
+        "Rust ownership in Solana is different from traditional apps. Let me explain:",
       answerContent: `In Solana programs, ownership works differently due to the runtime constraints. Here's how to think about it:
 
 ## Account Data Ownership
@@ -666,14 +675,15 @@ The borrow checker is your friend - it prevents runtime errors!`,
       rewardAmount: 0,
       author: "RustOwnership",
       createdAt: Math.floor(Date.now() / 1000) - 86400 * 2,
-      isAccepted: false
-    }
+      isAccepted: false,
+    },
   ],
   "5": [
     {
       id: "1",
       responder: "0x1a2b3c4d5e6f7g8h9i0j1k2l3m4n5o6p",
-      answerText: "CPI in Anchor is straightforward but requires careful account management:",
+      answerText:
+        "CPI in Anchor is straightforward but requires careful account management:",
       answerContent: `Cross-Program Invocation (CPI) allows Solana programs to call other programs. Here's how to do it properly in Anchor:
 
 ## Basic CPI Structure
@@ -771,14 +781,15 @@ pub fn safe_transfer(ctx: Context<TokenTransfer>, amount: u64) -> Result<()> {
       rewardAmount: 0,
       author: "CPIExpert",
       createdAt: Math.floor(Date.now() / 1000) - 86400 * 3,
-      isAccepted: false
-    }
+      isAccepted: false,
+    },
   ],
   "6": [
     {
       id: "1",
       responder: "0x2w3e4r5t6y7u8i9o0p1a2s3d4f5g6h7j",
-      answerText: "Optimizing Solana programs requires understanding compute limits and data structures:",
+      answerText:
+        "Optimizing Solana programs requires understanding compute limits and data structures:",
       answerContent: `Solana has a compute budget limit of 200,000 compute units per transaction. Here are optimization strategies:
 
 ## Compute Unit Optimization
@@ -843,14 +854,15 @@ Remember: Security > Performance. Don't sacrifice security for minor performance
       rewardAmount: 0,
       author: "PerformanceGuru",
       createdAt: Math.floor(Date.now() / 1000) - 86400 * 5,
-      isAccepted: false
-    }
+      isAccepted: false,
+    },
   ],
   "7": [
     {
       id: "1",
       responder: "0x3z4x5c6v7b8n9m0l1k2j3h4g5f6d7s8a",
-      answerText: "For Solana dApps, I recommend Zustand for state management with wallet-adapter:",
+      answerText:
+        "For Solana dApps, I recommend Zustand for state management with wallet-adapter:",
       answerContent: `Here's my recommended architecture for Solana React dApps:
 
 ## State Management Setup
@@ -959,14 +971,15 @@ This architecture provides good separation of concerns and handles common Solana
       rewardAmount: 0,
       author: "ReactSolana",
       createdAt: Math.floor(Date.now() / 1000) - 86400 * 1,
-      isAccepted: false
-    }
+      isAccepted: false,
+    },
   ],
   "8": [
     {
       id: "1",
       responder: "0x9i8u7y6t5r4e3w2q1a0s9d8f7g6h5j4k",
-      answerText: "Procedural macros are powerful but complex. Here's a practical example:",
+      answerText:
+        "Procedural macros are powerful but complex. Here's a practical example:",
       answerContent: `Creating derive macros for Solana accounts can save a lot of boilerplate. Here's a complete example:
 
 ## Derive Macro for Account Validation
@@ -1060,14 +1073,15 @@ Macros can greatly reduce boilerplate but add complexity to debugging.`,
       rewardAmount: 0,
       author: "MacroMaster",
       createdAt: Math.floor(Date.now() / 1000) - 86400 * 6,
-      isAccepted: false
-    }
+      isAccepted: false,
+    },
   ],
   "9": [
     {
       id: "1",
       responder: "0x5k4j3h2g1f0d9s8a7z6x5c4v3b2n1m0l",
-      answerText: "Building an NFT marketplace on Solana requires understanding Metaplex standards:",
+      answerText:
+        "Building an NFT marketplace on Solana requires understanding Metaplex standards:",
       answerContent: `Here's a comprehensive guide for building an NFT marketplace:
 
 ## Metaplex SDK Setup
@@ -1148,14 +1162,15 @@ This is a complex project requiring expertise in multiple areas. Consider starti
       rewardAmount: 0,
       author: "NFTArchitect",
       createdAt: Math.floor(Date.now() / 1000) - 86400 * 2,
-      isAccepted: false
-    }
+      isAccepted: false,
+    },
   ],
   "10": [
     {
       id: "1",
       responder: "0x742d35Cc6634C0532925a3b844Bc454e4438f44e",
-      answerText: "For async Solana clients, I recommend using tokio with connection pooling:",
+      answerText:
+        "For async Solana clients, I recommend using tokio with connection pooling:",
       answerContent: `Async programming in Solana clients is different from programs. Here's how to structure it:
 
 ## Async Client Architecture
@@ -1260,7 +1275,7 @@ This architecture handles the complexities of async Solana interactions while ma
       rewardAmount: 0,
       author: "AsyncSolana",
       createdAt: Math.floor(Date.now() / 1000) - 86400 * 4,
-      isAccepted: false
-    }
-  ]
+      isAccepted: false,
+    },
+  ],
 };
