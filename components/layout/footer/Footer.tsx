@@ -15,7 +15,7 @@ export function Footer() {
                         <div>
                             <Link href="/" className="flex items-center gap-2 mb-4">
                                 <CircleDollarSign className="h-6 w-6 text-primary" />
-                                <span className="font-bold text-xl">SolanaLearn</span>
+                                <span className="font-bold text-xl">GemsC</span>
                             </Link>
                             <p className="text-muted-foreground max-w-md">
                                 Master Solana development through interactive courses and coding challenges.
@@ -35,7 +35,7 @@ export function Footer() {
                 </div>
 
                 <div className="mt-12 pt-8 border-t text-center text-sm text-muted-foreground">
-                    <p>© {new Date().getFullYear()} SolanaLearn. All rights reserved.</p>
+                    <p>© {new Date().getFullYear()} GemsC. All rights reserved.</p>
                 </div>
             </div>
         </footer>

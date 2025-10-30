@@ -121,15 +121,15 @@ function FAQItem({ question, answer, index }: FAQItemProps) {
 function Faq02() {
     const faqs: Omit<FAQItemProps, "index">[] = [
         {
-            question: "What is SolanaLearn?",
-            answer: "SolanaLearn is a comprehensive Solana development learning platform where users can take interactive courses, complete coding challenges, earn NFTs for achievements, and practice with real test cases. Our platform focuses on hands-on blockchain development learning.",
+            question: "What is GemsC?",
+            answer: "GemsC is a comprehensive Solana development learning platform where users can take interactive courses, complete coding challenges, earn NFTs for achievements, and practice with real test cases. Our platform focuses on hands-on blockchain development learning.",
         },
         {
             question: "How does the leaderboard work?",
             answer: "Our leaderboard tracks user achievements and learning progress. Users earn points by completing courses, solving challenges successfully, earning NFTs, and helping other learners. The most dedicated and skilled developers rise to the top of the leaderboard.",
         },
         {
-            question: "How do tags work on SolanaLearn?",
+            question: "How do tags work on GemsC?",
             answer: "Tags help categorize courses and challenges by technology and difficulty level. You can browse content by tags like 'Rust', 'Anchor', 'DeFi', 'NFTs' to find learning materials that match your interests and skill level.",
         },
         {
@@ -150,9 +150,9 @@ function Faq02() {
                     <h2 className="text-3xl font-semibold mb-3 bg-linear-to-r from-gray-900 via-gray-800 to-gray-900 dark:from-white dark:via-gray-100 dark:to-white bg-clip-text text-transparent">
                         Frequently Asked Questions
                     </h2>
-                    <p className="text-sm text-gray-600 dark:text-gray-400">
-                        Everything you need to know about using SolanaLearn
-                    </p>
+                            <p className="text-sm text-gray-600 dark:text-gray-400">
+                                Everything you need to know about using GemsC
+                            </p>
                 </motion.div>
 
                 <div className="max-w-2xl mx-auto space-y-2">

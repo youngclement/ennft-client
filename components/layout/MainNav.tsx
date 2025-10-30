@@ -15,6 +15,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useWallet, useConnection } from "@solana/wallet-adapter-react";
+import { LAMPORTS_PER_SOL } from "@solana/web3.js";
 import { truncateAddress } from "@/lib/utils";
 import {
   DropdownMenu,
@@ -34,6 +35,7 @@ export function MainNav() {
 
   const { connected, publicKey, sendTransaction, disconnect } = useWallet();
   const { connection } = useConnection();
+  const [balance, setBalance] = useState<number | null>(null);
 
   // Lắng nghe sự kiện scroll
   useEffect(() => {
@@ -47,6 +49,35 @@ export function MainNav() {
 
   const addressLabel = publicKey ? truncateAddress(publicKey.toBase58()) : "";
 
+  useEffect(() => {
+    let mounted = true;
+    let interval: ReturnType<typeof setInterval> | null = null;
+
+    async function fetchBalance() {
+      try {
+        if (publicKey) {
+          const lamports = await connection.getBalance(publicKey);
+          if (mounted) setBalance(lamports / LAMPORTS_PER_SOL);
+        } else {
+          if (mounted) setBalance(null);
+        }
+      } catch (err) {
+        console.error("Failed to fetch balance", err);
+      }
+    }
+
+    fetchBalance();
+    // refresh every 15s while connected
+    if (publicKey) {
+      interval = setInterval(fetchBalance, 15000);
+    }
+
+    return () => {
+      mounted = false;
+      if (interval) clearInterval(interval);
+    };
+  }, [publicKey, connection]);
+
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
@@ -57,11 +88,11 @@ export function MainNav() {
     >
       <div className="container mx-auto px-4 h-16 flex items-center justify-between">
         <div className="flex items-center gap-6">
-          <Link href="/" className="flex items-center gap-2">
+            <Link href="/" className="flex items-center gap-2">
             <Logo />
 
             <span className="font-bold text-xl text-gray-900 dark:text-gray-100">
-              SolanaLearn
+              GemsC
             </span>
           </Link>
 
@@ -137,6 +168,13 @@ export function MainNav() {
           <ModeToggle />
           {connected ? (
             <>
+              {/* Show balance and shortened address on the nav */}
+              <div className="hidden sm:flex items-center gap-3 mr-2">
+                <span className="text-sm font-medium">
+                  {balance !== null ? `${balance.toFixed(4)} SOL` : "0.0000 SOL"}
+                </span>
+                <span className="text-sm text-muted-foreground">{addressLabel}</span>
+              </div>
               <Button asChild size="sm">
                 <Link href="/questions/ask">
                   <PlusCircle className="h-4 w-4 mr-2" />

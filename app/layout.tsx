@@ -21,13 +21,14 @@ import { LoadingProvider } from "@/components/loading-provider";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "SolanaLearn - Master Solana Development",
+  title: "GemsC - Master Solana Development",
   description:
     "Master Solana development through interactive courses, earn NFTs for completing challenges, and practice with real test cases",
   icons: {
     icon: "/imgs/logo.png",
   },
 };
+
 
 export default function RootLayout({
   children,
