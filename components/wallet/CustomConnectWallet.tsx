@@ -1,16 +1,16 @@
-'use client';
+"use client";
 
-import { Avatar, AvatarFallback } from '@/components/ui/avatar';
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from '@/components/ui/tooltip';
-import { ConnectButton } from '@rainbow-me/rainbowkit';
-import { AnimatePresence, motion } from 'framer-motion';
+} from "@/components/ui/tooltip";
+import { ConnectButton } from "@rainbow-me/rainbowkit";
+import { AnimatePresence, motion } from "framer-motion";
 import {
   Check,
   ChevronDown,
@@ -20,9 +20,9 @@ import {
   PlugZap,
   Sparkles,
   Wallet,
-} from 'lucide-react';
-import { useTheme } from 'next-themes';
-import { useEffect, useState } from 'react';
+} from "lucide-react";
+import { useTheme } from "next-themes";
+import { useEffect, useState } from "react";
 
 export function CustomConnectButton() {
   const { theme, resolvedTheme } = useTheme();
@@ -31,7 +31,7 @@ export function CustomConnectButton() {
 
   useEffect(() => {
     // Ensure RainbowKit follows the app theme
-    document.documentElement.classList.toggle('light', theme === 'light');
+    document.documentElement.classList.toggle("light", theme === "light");
   }, [theme, resolvedTheme]);
 
   function formatAddress(address: string) {
@@ -55,22 +55,22 @@ export function CustomConnectButton() {
         authenticationStatus,
         mounted,
       }) => {
-        const ready = mounted && authenticationStatus !== 'loading';
+        const ready = mounted && authenticationStatus !== "loading";
         const connected =
           ready &&
           account &&
           chain &&
-          (!authenticationStatus || authenticationStatus === 'authenticated');
+          (!authenticationStatus || authenticationStatus === "authenticated");
 
         return (
           <div
             className="relative z-10"
             {...(!ready && {
-              'aria-hidden': true,
+              "aria-hidden": true,
               style: {
                 opacity: 0,
-                pointerEvents: 'none',
-                userSelect: 'none',
+                pointerEvents: "none",
+                userSelect: "none",
               },
             })}
           >
@@ -166,7 +166,7 @@ export function CustomConnectButton() {
                     </Tooltip>
                   </TooltipProvider>
 
-                  <Button
+                  {/* <Button
                     onClick={openAccountModal}
                     variant="outline"
                     size="sm"
@@ -216,7 +216,7 @@ export function CustomConnectButton() {
                       </div>
                     </div>
                     <ChevronDown className="ml-1 h-3.5 w-3.5 opacity-70 transition-transform duration-300 group-hover:rotate-180" />
-                  </Button>
+                  </Button> */}
                 </div>
               );
             })()}

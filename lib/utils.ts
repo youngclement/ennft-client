@@ -14,3 +14,6 @@ export function shortenEthAddress(address: string): string {
   if (!address) return "";
   return `${address.slice(0, 6)}...${address.slice(-4)}`;
 }
+
+export const formatAddress = (addr: string) =>
+  `${addr.slice(0, 6)}...${addr.slice(-4)}`;

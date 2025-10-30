@@ -17,6 +17,7 @@ import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { CustomConnectButton } from "../wallet/CustomConnectWallet";
 import Logo from "../common/Logo";
+import ConnectWalletBtn from "../connect-wallet-btn";
 
 export function MainNav() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -140,7 +141,7 @@ export function MainNav() {
             </Link>
           </Button>
 
-          {/* <CustomConnectButton /> */}
+          <ConnectWalletBtn />
         </div>
       </div>
     </header>

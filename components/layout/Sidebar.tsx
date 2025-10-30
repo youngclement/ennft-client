@@ -1,9 +1,9 @@
-"use client"
+"use client";
 
-import { cn } from "@/lib/utils"
-import { Button } from "@/components/ui/button"
-import { ScrollArea } from "@/components/ui/scroll-area"
-import { Card } from "@/components/ui/card"
+import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { Card } from "@/components/ui/card";
 import {
   Home,
   MessageSquare,
@@ -18,12 +18,12 @@ import {
   ExternalLink,
   LucideIcon,
   BookOpen,
-  Target
-} from "lucide-react"
-import Link from "next/link"
-import { usePathname } from "next/navigation"
-import { useState } from "react"
-import { motion } from "framer-motion"
+  Target,
+} from "lucide-react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { useState } from "react";
+import { motion } from "framer-motion";
 
 interface SidebarItem {
   title: string;
@@ -43,17 +43,17 @@ const sidebarItems: SidebarItem[] = [
     icon: Target,
     href: "/elearning/challenges",
   },
-]
+];
 
 export function Sidebar() {
-  const pathname = usePathname()
-  const [walletConnected, setWalletConnected] = useState(false)
-  const [isHovering, setIsHovering] = useState<string | null>(null)
+  const pathname = usePathname();
+  const [walletConnected, setWalletConnected] = useState(false);
+  const [isHovering, setIsHovering] = useState<string | null>(null);
 
   const handleConnectWallet = () => {
     // Implement wallet connection logic here
-    setWalletConnected(!walletConnected)
-  }
+    setWalletConnected(!walletConnected);
+  };
 
   return (
     <div className="hidden lg:block w-[280px] shrink-0 border-r bg-gradient-to-b from-background via-background to-secondary/5">
@@ -61,7 +61,7 @@ export function Sidebar() {
         <ScrollArea className="h-full py-8 px-4">
           <div className="space-y-8">
             {/* Wallet Connection Card */}
-            <Card className="overflow-hidden border-none shadow-xl backdrop-blur-sm bg-gradient-to-br from-primary/5 via-secondary/10 to-background rounded-2xl">
+            {/* <Card className="overflow-hidden border-none shadow-xl backdrop-blur-sm bg-gradient-to-br from-primary/5 via-secondary/10 to-background rounded-2xl">
               {walletConnected ? (
                 <div className="p-5 space-y-4">
                   <div className="flex items-center justify-between">
@@ -129,17 +129,19 @@ export function Sidebar() {
                   </div>
                 </motion.div>
               )}
-            </Card>
+            </Card> */}
 
             {/* Navigation Menu */}
             <div className="space-y-3">
               <div className="flex items-center justify-between px-2">
-                <h3 className="text-xs uppercase tracking-wider text-muted-foreground font-semibold">Navigation</h3>
+                <h3 className="text-xs uppercase tracking-wider text-muted-foreground font-semibold">
+                  Navigation
+                </h3>
                 <div className="h-px flex-1 bg-border/50 ml-2"></div>
               </div>
               <nav className="space-y-1.5">
                 {sidebarItems.map((item) => {
-                  const isActive = pathname === item.href
+                  const isActive = pathname === item.href;
 
                   return (
                     <Button
@@ -148,7 +150,9 @@ export function Sidebar() {
                       className={cn(
                         "w-full justify-start gap-3 pl-3 pr-3 py-6 relative overflow-hidden group rounded-xl",
                         isActive ? "bg-secondary/80 shadow-sm" : "",
-                        isHovering === item.href && !isActive ? "bg-secondary/40" : ""
+                        isHovering === item.href && !isActive
+                          ? "bg-secondary/40"
+                          : ""
                       )}
                       asChild
                       onMouseEnter={() => setIsHovering(item.href)}
@@ -164,19 +168,31 @@ export function Sidebar() {
                             transition={{ duration: 0.2 }}
                           />
                         )}
-                        <div className={cn(
-                          "w-8 h-8 flex items-center justify-center rounded-lg transition-all duration-300",
-                          isActive ? "bg-primary/20" : "bg-transparent group-hover:bg-primary/10"
-                        )}>
-                          <item.icon className={cn(
-                            "h-4 w-4 shrink-0 transition-all duration-200",
-                            isActive ? "text-primary" : "text-muted-foreground group-hover:text-foreground"
-                          )} />
+                        <div
+                          className={cn(
+                            "w-8 h-8 flex items-center justify-center rounded-lg transition-all duration-300",
+                            isActive
+                              ? "bg-primary/20"
+                              : "bg-transparent group-hover:bg-primary/10"
+                          )}
+                        >
+                          <item.icon
+                            className={cn(
+                              "h-4 w-4 shrink-0 transition-all duration-200",
+                              isActive
+                                ? "text-primary"
+                                : "text-muted-foreground group-hover:text-foreground"
+                            )}
+                          />
                         </div>
-                        <span className={cn(
-                          "flex-1 font-medium text-sm",
-                          isActive ? "text-foreground" : "text-muted-foreground group-hover:text-foreground"
-                        )}>
+                        <span
+                          className={cn(
+                            "flex-1 font-medium text-sm",
+                            isActive
+                              ? "text-foreground"
+                              : "text-muted-foreground group-hover:text-foreground"
+                          )}
+                        >
                           {item.title}
                         </span>
                         {item.badge && (
@@ -186,7 +202,7 @@ export function Sidebar() {
                         )}
                       </Link>
                     </Button>
-                  )
+                  );
                 })}
               </nav>
             </div>
@@ -194,7 +210,9 @@ export function Sidebar() {
             {/* Profile Summary */}
             <div className="space-y-3 mt-6">
               <div className="flex items-center justify-between px-2">
-                <h3 className="text-xs uppercase tracking-wider text-muted-foreground font-semibold">Your Profile</h3>
+                <h3 className="text-xs uppercase tracking-wider text-muted-foreground font-semibold">
+                  Your Profile
+                </h3>
                 <div className="h-px flex-1 bg-border/50 ml-2"></div>
               </div>
 
@@ -207,7 +225,9 @@ export function Sidebar() {
                     <h4 className="text-sm font-semibold truncate">John Doe</h4>
                     <div className="flex items-center gap-2 mt-0.5">
                       <div className="h-2 w-2 rounded-full bg-primary/80"></div>
-                      <p className="text-xs text-muted-foreground">Pro Member</p>
+                      <p className="text-xs text-muted-foreground">
+                        Pro Member
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -217,5 +237,5 @@ export function Sidebar() {
         </ScrollArea>
       </div>
     </div>
-  )
+  );
 }
