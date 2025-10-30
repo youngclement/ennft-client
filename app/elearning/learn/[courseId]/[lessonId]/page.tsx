@@ -47,7 +47,7 @@ export default function LessonPlayerPage() {
   const [uploadedFile, setUploadedFile] = useState<File | null>(null);
   const [isUploading, setIsUploading] = useState(false);
   const [testResults, setTestResults] = useState<any>(null);
-  const [testMode, setTestMode] = useState<"error" | "success">("error");
+  const [testMode, setTestMode] = useState<"error" | "success">("success");
   const [challengeProgress, setChallengeProgress] = useState(0);
   const [isChallengeCompleted, setIsChallengeCompleted] = useState(false);
   const [certificateMinted, setCertificateMinted] = useState(false);
@@ -1135,47 +1135,6 @@ Explanation: sum of positive numbers only (1 + 3 + 5 = 9)`}
               </div>
             </div>
 
-            {/* Test Mode Toggle (for development/testing) */}
-            {uploadedFile && (
-              <div className="bg-yellow-50 dark:bg-yellow-950/20 border border-yellow-200 dark:border-yellow-800 rounded-lg p-4">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <h4 className="font-medium text-yellow-800 dark:text-yellow-200">
-                      Test Mode
-                    </h4>
-                    <p className="text-sm text-yellow-700 dark:text-yellow-300">
-                      Choose which scenario to test (for development purposes)
-                    </p>
-                  </div>
-                  <div className="flex gap-2">
-                    <Button
-                      variant={testMode === "error" ? "default" : "outline"}
-                      size="sm"
-                      onClick={() => setTestMode("error")}
-                      className={
-                        testMode === "error"
-                          ? "bg-red-500 hover:bg-red-600"
-                          : ""
-                      }
-                    >
-                      Test Error
-                    </Button>
-                    <Button
-                      variant={testMode === "success" ? "default" : "outline"}
-                      size="sm"
-                      onClick={() => setTestMode("success")}
-                      className={
-                        testMode === "success"
-                          ? "bg-green-500 hover:bg-green-600"
-                          : ""
-                      }
-                    >
-                      Test Success
-                    </Button>
-                  </div>
-                </div>
-              </div>
-            )}
 
             {/* Upload Program Button */}
             {uploadedFile && (
