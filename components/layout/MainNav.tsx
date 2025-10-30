@@ -92,18 +92,6 @@ export function MainNav() {
             </Button>
 
             <Button
-              variant={pathname === "/elearning/nfts" ? "secondary" : "ghost"}
-              size="sm"
-              className=" dark:text-gray-200"
-              asChild
-            >
-              <Link href="/elearning/nfts">
-                <Award className="h-4 w-4 mr-2" />
-                NFTs
-              </Link>
-            </Button>
-
-            <Button
               variant={
                 pathname === "/elearning/challenges" ? "secondary" : "ghost"
               }
