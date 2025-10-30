@@ -85,7 +85,7 @@ export async function POST(request: NextRequest) {
 
     // Create metadata JSON
     const metadata = {
-      name: `${body.courseName} Certificate - ${body.name}`,
+      name: `${body.courseName} Certificate`,
       description: `Certificate of completion for ${body.courseName} course, awarded to ${body.name} on ${body.completionDate}`,
       image: certificateImageUrl,
       attributes: [
