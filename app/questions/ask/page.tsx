@@ -1,9 +1,9 @@
-import { QuestionForm } from '@/components/questions/QuestionForm'
+// import { QuestionForm } from '@/components/questions/QuestionForm'
 
 export const metadata = {
-  title: 'Ask a Question - DevForum',
-  description: 'Ask your programming questions and get help from the community',
-}
+  title: "Ask a Question - DevForum",
+  description: "Ask your programming questions and get help from the community",
+};
 
 export default function AskQuestionPage() {
   return (
@@ -13,9 +13,9 @@ export default function AskQuestionPage() {
         <p className="text-muted-foreground mb-8">
           Get help from the community by asking a clear, detailed question
         </p>
-        
-        <QuestionForm />
+
+        {/* <QuestionForm /> */}
       </div>
     </div>
-  )
+  );
 }

@@ -1,19 +1,39 @@
-'use client';
+"use client";
 
-import { ModeToggle } from '@/components/mode-toggle';
-import { Button } from '@/components/ui/button';
-import { Info, MessageSquare, PlusCircle, GraduationCap, BookOpen, Target } from 'lucide-react';
-import { useTheme } from 'next-themes';
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
-import { useEffect, useState } from 'react';
-import { CustomConnectButton } from '../wallet/CustomConnectWallet';
-import Logo from '../common/Logo';
+import dynamic from "next/dynamic";
+import { ModeToggle } from "@/components/mode-toggle";
+import { Button, buttonVariants } from "@/components/ui/button";
+import {
+  PlusCircle,
+  GraduationCap,
+  BookOpen,
+  Target,
+  User,
+} from "lucide-react";
+import { useTheme } from "next-themes";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { useEffect, useState } from "react";
+import { useWallet, useConnection } from "@solana/wallet-adapter-react";
+import { truncateAddress } from "@/lib/utils";
+import {
+  DropdownMenu,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuLabel,
+} from "@/components/ui/dropdown-menu";
+import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
+import Logo from "../common/Logo";
 
 export function MainNav() {
   const [isScrolled, setIsScrolled] = useState(false);
   const pathname = usePathname();
   const { theme } = useTheme();
+
+  const { connected, publicKey, sendTransaction, disconnect } = useWallet();
+  const { connection } = useConnection();
 
   // Lắng nghe sự kiện scroll
   useEffect(() => {
@@ -21,16 +41,19 @@ export function MainNav() {
       setIsScrolled(window.scrollY > 0); // Set trạng thái khi scrollY > 0
     };
 
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  const addressLabel = publicKey ? truncateAddress(publicKey.toBase58()) : "";
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled
-        ? 'bg-background/80 backdrop-blur-lg shadow-lg'
-        : 'bg-transparent'
-        }`}
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        isScrolled
+          ? "bg-background/80 backdrop-blur-lg shadow-lg"
+          : "bg-transparent"
+      }`}
     >
       <div className="container mx-auto px-4 h-16 flex items-center justify-between">
         <div className="flex items-center gap-6">
@@ -56,7 +79,7 @@ export function MainNav() {
             </Button> */}
 
             <Button
-              variant={pathname === '/elearning' ? 'secondary' : 'ghost'}
+              variant={pathname === "/elearning" ? "secondary" : "ghost"}
               size="sm"
               className=" dark:text-gray-200"
               asChild
@@ -68,7 +91,9 @@ export function MainNav() {
             </Button>
 
             <Button
-              variant={pathname === '/elearning/dashboard' ? 'secondary' : 'ghost'}
+              variant={
+                pathname === "/elearning/dashboard" ? "secondary" : "ghost"
+              }
               size="sm"
               className=" dark:text-gray-200"
               asChild
@@ -80,7 +105,9 @@ export function MainNav() {
             </Button>
 
             <Button
-              variant={pathname === '/elearning/challenges' ? 'secondary' : 'ghost'}
+              variant={
+                pathname === "/elearning/challenges" ? "secondary" : "ghost"
+              }
               size="sm"
               className=" dark:text-gray-200"
               asChild
@@ -108,16 +135,61 @@ export function MainNav() {
         {/* Công cụ và nút hành động */}
         <div className="flex items-center gap-4">
           <ModeToggle />
-          <Button asChild size="sm">
-            <Link href="/questions/ask">
-              <PlusCircle className="h-4 w-4 mr-2" />
-              Ask Question
-            </Link>
-          </Button>
+          {connected ? (
+            <>
+              <Button asChild size="sm">
+                <Link href="/questions/ask">
+                  <PlusCircle className="h-4 w-4 mr-2" />
+                  Ask Question
+                </Link>
+              </Button>
 
-          {/* <CustomConnectButton /> */}
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="ghost" size="icon" className="rounded-full">
+                    <Avatar className="h-8 w-8">
+                      <AvatarImage src="" alt="Profile" />
+                      <AvatarFallback>
+                        <User className="h-4 w-4" />
+                      </AvatarFallback>
+                    </Avatar>
+                  </Button>
+                </DropdownMenuTrigger>
+
+                <DropdownMenuContent align="end" className="w-44">
+                  <DropdownMenuLabel className="font-mono text-xs">
+                    {addressLabel}
+                  </DropdownMenuLabel>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem
+                    onClick={() => disconnect()}
+                    className="text-red-600 focus:bg-red-100 dark:text-red-500 dark:focus:bg-red-900"
+                  >
+                    Logout
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            </>
+          ) : (
+            <ConnectWalletButton />
+          )}
         </div>
       </div>
     </header>
+  );
+}
+
+const WalletMultiButtonDynamic = dynamic(
+  async () =>
+    (await import("@solana/wallet-adapter-react-ui")).WalletMultiButton,
+  { ssr: false }
+);
+
+function ConnectWalletButton() {
+  return (
+    <WalletMultiButtonDynamic
+      className="!bg-primary"
+      // className={buttonVariants({ size: "sm" })}
+    />
   );
 }

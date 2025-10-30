@@ -23,9 +23,10 @@ import { Course } from '@/lib/data/mock-courses';
 interface CourseDetailHeaderProps {
     course: Course;
     isEnrolled?: boolean;
+    onEnroll?: () => void;
 }
 
-export function CourseDetailHeader({ course, isEnrolled = false }: CourseDetailHeaderProps) {
+export function CourseDetailHeader({ course, isEnrolled = false, onEnroll }: CourseDetailHeaderProps) {
     const formatDuration = (minutes: number) => {
         const hours = Math.floor(minutes / 60);
         const mins = minutes % 60;
@@ -181,7 +182,7 @@ export function CourseDetailHeader({ course, isEnrolled = false }: CourseDetailH
                                     </div>
                                 ) : (
                                     <div className="space-y-3">
-                                        <Button className="w-full" size="lg">
+                                        <Button className="w-full" size="lg" onClick={onEnroll}>
                                             <ShoppingCart className="h-5 w-5 mr-2" />
                                             Enroll Now
                                         </Button>

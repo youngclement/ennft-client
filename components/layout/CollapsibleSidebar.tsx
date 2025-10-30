@@ -1,10 +1,10 @@
-'use client';
+"use client";
 
-import { Button } from '@/components/ui/button';
-import { Card } from '@/components/ui/card';
-import { ScrollArea } from '@/components/ui/scroll-area';
-import { useGetUser } from '@/lib/hooks/useGetUser';
-import { cn } from '@/lib/utils';
+import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
+import { ScrollArea } from "@/components/ui/scroll-area";
+// import { useGetUser } from '@/lib/hooks/useGetUser';
+import { cn } from "@/lib/utils";
 import {
   ChevronLeft,
   ChevronRight,
@@ -16,42 +16,42 @@ import {
   Tags,
   Trophy,
   Users,
-} from 'lucide-react';
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
-import { useState, useEffect } from 'react';
-import { useAccount, useBalance, useChains } from 'wagmi';
+} from "lucide-react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { useState, useEffect } from "react";
+import { useAccount, useBalance, useChains } from "wagmi";
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from '@/components/ui/tooltip';
-import { Avatar, AvatarFallback } from '@/components/ui/avatar';
-import { Separator } from '@/components/ui/separator';
-import { ProgressBar } from '../ui/progress';
-import CustomAvatar from '../users/CustomAvatar';
+} from "@/components/ui/tooltip";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { Separator } from "@/components/ui/separator";
+import { ProgressBar } from "../ui/progress";
+import CustomAvatar from "../users/CustomAvatar";
 
 const sidebarItems = [
   {
-    title: 'Home',
+    title: "Home",
     icon: Home,
-    href: '/',
+    href: "/",
   },
   {
-    title: 'Questions',
+    title: "Questions",
     icon: MessageSquare,
-    href: '/questions',
+    href: "/questions",
   },
   {
-    title: 'Leaderboard',
+    title: "Leaderboard",
     icon: Trophy,
-    href: '/leaderboard',
+    href: "/leaderboard",
   },
   {
-    title: 'Users',
+    title: "Users",
     icon: Users,
-    href: '/users',
+    href: "/users",
   },
   // {
   //   title: 'Settings',
@@ -63,29 +63,29 @@ const sidebarItems = [
 export function CollapsibleSidebar() {
   const pathname = usePathname();
   const [isCollapsed, setIsCollapsed] = useState(() => {
-    if (typeof window !== 'undefined') {
-      const savedState = localStorage.getItem('sidebarCollapsed');
+    if (typeof window !== "undefined") {
+      const savedState = localStorage.getItem("sidebarCollapsed");
       return savedState ? JSON.parse(savedState) : true;
     }
     return true;
   });
-  const chains = useChains();
-  const { address } = useAccount();
-  const { data: balanceData, isLoading: isBalanceLoading } = useBalance({
-    address,
-  });
-  const { user, isLoading: isUserLoading } = useGetUser();
+  // const chains = useChains();
+  // const { address } = useAccount();
+  // const { data: balanceData, isLoading: isBalanceLoading } = useBalance({
+  //   address,
+  // });
+  // const { user, isLoading: isUserLoading } = useGetUser();
 
   // Format balance to be more readable
-  const balance = balanceData
-    ? Number(balanceData.formatted).toLocaleString(undefined, {
-      maximumFractionDigits: 4,
-      minimumFractionDigits: 0,
-    })
-    : '0';
+  // const balance = balanceData
+  //   ? Number(balanceData.formatted).toLocaleString(undefined, {
+  //     maximumFractionDigits: 4,
+  //     minimumFractionDigits: 0,
+  //   })
+  //   : '0';
 
-  const reputation = user?.reputation || BigInt(0);
-  const reputationValue = Number(reputation.toString());
+  // const reputation = user?.reputation || BigInt(0);
+  // const reputationValue = Number(reputation.toString());
 
   // Calculate next reputation milestone
   const getNextMilestone = (rep) => {
@@ -95,27 +95,27 @@ export function CollapsibleSidebar() {
     );
   };
 
-  const nextMilestone = getNextMilestone(reputationValue);
-  const progressPercentage = Math.min(
-    100,
-    (reputationValue / nextMilestone) * 100
-  );
+  // const nextMilestone = getNextMilestone(reputationValue);
+  // const progressPercentage = Math.min(
+  //   100,
+  //   (reputationValue / nextMilestone) * 100
+  // );
 
   // Save collapsed state to localStorage
   useEffect(() => {
-    localStorage.setItem('sidebarCollapsed', JSON.stringify(isCollapsed));
+    localStorage.setItem("sidebarCollapsed", JSON.stringify(isCollapsed));
   }, [isCollapsed]);
 
   // Get first letter of address for avatar
-  const addressFirstLetter = address
-    ? address.substring(2, 3).toUpperCase()
-    : '?';
+  // const addressFirstLetter = address
+  //   ? address.substring(2, 3).toUpperCase()
+  //   : '?';
 
   return (
     <div
       className={cn(
-        'relative border-r transition-all duration-300 ease-in-out bg-background shadow-sm',
-        isCollapsed ? 'w-[68px]' : 'w-[260px]'
+        "relative border-r transition-all duration-300 ease-in-out bg-background shadow-sm",
+        isCollapsed ? "w-[68px]" : "w-[260px]"
       )}
     >
       <div className="sticky top-[65px] h-[calc(100vh-65px)]">
@@ -182,7 +182,7 @@ export function CollapsibleSidebar() {
                       className="w-full h-12 rounded-md mb-2"
                     >
                       <div className="h-8 w-8">
-                        <CustomAvatar address={address} size={10} />
+                        {/* <CustomAvatar address={address} size={10} /> */}
                       </div>
                     </Button>
                   </TooltipTrigger>
@@ -191,26 +191,26 @@ export function CollapsibleSidebar() {
                     className="flex flex-col gap-2 p-3 w-48"
                   >
                     <p className="text-xs text-muted-foreground truncate font-mono">
-                      {address
+                      {/* {address
                         ? `${address.slice(0, 10)}...${address.slice(-6)}`
-                        : 'Not connected'}
+                        : 'Not connected'} */}
                     </p>
                     <Separator />
                     <div className="flex justify-between">
                       <span className="text-xs">Balance:</span>
                       <span className="text-xs font-medium">
-                        {isBalanceLoading
+                        {/* {isBalanceLoading
                           ? '...'
                           : `${balance} ${chains[0]?.nativeCurrency?.symbol ?? ''
-                          }`}
+                          }`} */}
                       </span>
                     </div>
                     <div className="flex justify-between">
                       <span className="text-xs">Reputation:</span>
                       <span className="text-xs font-medium">
-                        {isUserLoading
+                        {/* {isUserLoading
                           ? '...'
-                          : reputationValue.toLocaleString()}
+                          : reputationValue.toLocaleString()} */}
                       </span>
                     </div>
                   </TooltipContent>
@@ -226,18 +226,18 @@ export function CollapsibleSidebar() {
                     <Tooltip>
                       <TooltipTrigger asChild>
                         <Button
-                          variant={isActive ? 'secondary' : 'ghost'}
+                          variant={isActive ? "secondary" : "ghost"}
                           className={cn(
-                            'w-full justify-center p-2 h-10',
-                            isActive && 'bg-secondary shadow-sm'
+                            "w-full justify-center p-2 h-10",
+                            isActive && "bg-secondary shadow-sm"
                           )}
                           asChild
                         >
                           <Link href={item.href}>
                             <item.icon
                               className={cn(
-                                'h-5 w-5',
-                                isActive && 'text-primary'
+                                "h-5 w-5",
+                                isActive && "text-primary"
                               )}
                             />
                           </Link>
@@ -249,21 +249,21 @@ export function CollapsibleSidebar() {
                 ) : (
                   <Button
                     key={item.href}
-                    variant={isActive ? 'secondary' : 'ghost'}
+                    variant={isActive ? "secondary" : "ghost"}
                     className={cn(
-                      'w-full justify-start h-10',
-                      isActive && 'bg-secondary shadow-sm'
+                      "w-full justify-start h-10",
+                      isActive && "bg-secondary shadow-sm"
                     )}
                     asChild
                   >
                     <Link href={item.href}>
                       <item.icon
                         className={cn(
-                          'h-4 w-4 mr-3',
-                          isActive && 'text-primary'
+                          "h-4 w-4 mr-3",
+                          isActive && "text-primary"
                         )}
                       />
-                      <span className={cn(isActive && 'font-medium')}>
+                      <span className={cn(isActive && "font-medium")}>
                         {item.title}
                       </span>
                     </Link>
@@ -279,7 +279,7 @@ export function CollapsibleSidebar() {
               size="sm"
               className="rounded-full h-8 w-8 bg-background border-muted-foreground/20 hover:bg-muted transition-all"
               onClick={() => setIsCollapsed(!isCollapsed)}
-              aria-label={isCollapsed ? 'Expand sidebar' : 'Collapse sidebar'}
+              aria-label={isCollapsed ? "Expand sidebar" : "Collapse sidebar"}
             >
               {isCollapsed ? (
                 <ChevronRight className="h-4 w-4" />

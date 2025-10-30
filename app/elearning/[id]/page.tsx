@@ -1,7 +1,7 @@
 'use client';
 
 import { useParams } from 'next/navigation';
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -39,8 +39,14 @@ export default function CourseDetailPage() {
     }
 
     // Mock enrollment status - in real app this would come from user data
-    const isEnrolled = false;
+    const [isEnrolled, setIsEnrolled] = useState(false);
     const completedLessons: string[] = [];
+
+    const handleEnroll = () => {
+        setIsEnrolled(true);
+        // In a real app, you would also make an API call here to enroll the user
+        // Example: await enrollUserInCourse(courseId);
+    };
 
     return (
         <div className="min-h-screen bg-background">
@@ -62,7 +68,7 @@ export default function CourseDetailPage() {
                 </div>
             </div>
 
-            <CourseDetailHeader course={course} isEnrolled={isEnrolled} />
+            <CourseDetailHeader course={course} isEnrolled={isEnrolled} onEnroll={handleEnroll} />
 
             <div className="container mx-auto px-4 py-8">
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">

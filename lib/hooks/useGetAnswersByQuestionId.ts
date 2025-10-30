@@ -33,17 +33,17 @@ export function useGetAnswersByQuestionId(
   const [error, setError] = useState<Error | null>(null);
 
   // Lấy danh sách answers từ smart contract
-  const {
-    data: contractData,
-    error: contractError,
-    refetch,
-  } = useReadContract({
-    address: process.env.NEXT_PUBLIC_CONTRACT_ADDRESS as `0x${string}`,
-    abi: contractABI,
-    functionName: 'getAnswersByQuestionId',
-    args: questionId ? [questionId, pageIndex, pageSize] : undefined,
-    query: { enabled: !!questionId },
-  });
+  // const {
+  //   data: contractData,
+  //   error: contractError,
+  //   refetch,
+  // } = useReadContract({
+  //   address: process.env.NEXT_PUBLIC_CONTRACT_ADDRESS as `0x${string}`,
+  //   abi: contractABI,
+  //   functionName: 'getAnswersByQuestionId',
+  //   args: questionId ? [questionId, pageIndex, pageSize] : undefined,
+  //   query: { enabled: !!questionId },
+  // });
 
   // Fetch answerText từ backend
   const fetchAnswerTexts = useCallback(
@@ -105,13 +105,13 @@ export function useGetAnswersByQuestionId(
           return;
         }
 
-        const { data } = await refetch();
-        if (data) {
-          const { processedAnswers, total, pages } = processAnswers(data);
-          setTotalAnswers(total);
-          setTotalPages(pages);
-          await fetchAnswerTexts(processedAnswers); // Fetch answerText từ backend
-        }
+        // const { data } = await refetch();
+        // if (data) {
+        //   const { processedAnswers, total, pages } = processAnswers(data);
+        //   setTotalAnswers(total);
+        //   setTotalPages(pages);
+        //   await fetchAnswerTexts(processedAnswers); // Fetch answerText từ backend
+        // }
         setIsLoading(false);
       } catch (err) {
         setError(err instanceof Error ? err : new Error('Unknown error'));
@@ -127,17 +127,17 @@ export function useGetAnswersByQuestionId(
     pageIndex,
     pageSize,
     pollInterval,
-    refetch,
+    // refetch,
     processAnswers,
     fetchAnswerTexts,
   ]);
 
-  useEffect(() => {
-    if (contractError) {
-      setError(contractError);
-      setIsLoading(false);
-    }
-  }, [contractError]);
+  // useEffect(() => {
+  //   if (contractError) {
+  //     setError(contractError);
+  //     setIsLoading(false);
+  //   }
+  // }, [contractError]);
 
   const changePage = useCallback(
     (newPageIndex: number) => {
@@ -165,6 +165,6 @@ export function useGetAnswersByQuestionId(
     error,
     changePage,
     changePageSize,
-    refetch,
+    // refetch,
   };
 }

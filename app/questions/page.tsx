@@ -1,16 +1,16 @@
 "use client";
 
-import { useState } from 'react';
-import { QuestionsHeader } from '@/components/questions/QuestionsHeader';
-import { QuestionFilters } from '@/components/questions/QuestionFilters';
-import QuestionsList from '@/components/questions/QuestionsList';
-import { QuestionsSort } from '@/components/questions/QuestionsSort';
-import { useGetQuestions } from '@/lib/hooks/useGetQuestions';
-import { Card } from '@/components/ui/card';
+import { useState } from "react";
+import { QuestionsHeader } from "@/components/questions/QuestionsHeader";
+import { QuestionFilters } from "@/components/questions/QuestionFilters";
+import QuestionsList from "@/components/questions/QuestionsList";
+import { QuestionsSort } from "@/components/questions/QuestionsSort";
+import { useGetQuestions } from "@/lib/hooks/useGetQuestions";
+import { Card } from "@/components/ui/card";
 
 export default function QuestionsPage() {
-  const [selectedFilter, setSelectedFilter] = useState<string>('Recent');
-  const { isLoading } = useGetQuestions();
+  const [selectedFilter, setSelectedFilter] = useState<string>("Recent");
+  // const { isLoading } = useGetQuestions();
 
   const handleFilterChange = (filter: string) => {
     setSelectedFilter(filter);
@@ -19,7 +19,7 @@ export default function QuestionsPage() {
   return (
     <div className="container mx-auto px-4 py-8 space-y-8">
       <QuestionsHeader />
-      <div className="grid grid-cols-1 lg:grid-cols-[240px,1fr] gap-8">
+      {/* <div className="grid grid-cols-1 lg:grid-cols-[240px,1fr] gap-8">
         <QuestionFilters onFilterChange={handleFilterChange} />
         <div className="space-y-4">
           {isLoading ? (
@@ -43,7 +43,7 @@ export default function QuestionsPage() {
             <QuestionsList filter={selectedFilter} />
           )}
         </div>
-      </div>
+      </div> */}
     </div>
   );
 }
