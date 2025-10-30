@@ -29,15 +29,15 @@ export function HowItWorks() {
           <HeroVideoDialog
             className="block dark:hidden"
             animationStyle="top-in-bottom-out"
-            videoSrc="https://www.youtube.com/embed/jVqmKt-LfpA?si=poDnBRDnrRt9owu_"
-            thumbnailSrc="https://i.ibb.co/tPwzYWBx/image.png"
+            videoSrc=""
+            thumbnailSrc=""
             thumbnailAlt="Hero Video"
           />
           <HeroVideoDialog
             className="hidden dark:block"
             animationStyle="top-in-bottom-out"
-            videoSrc="https://www.youtube.com/embed/jVqmKt-LfpA?si=poDnBRDnrRt9owu_"
-            thumbnailSrc="https://i.ibb.co/tPwzYWBx/image.png"
+            videoSrc=""
+            thumbnailSrc=""
             thumbnailAlt="Hero Video"
           />
         </div>
