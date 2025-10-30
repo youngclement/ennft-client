@@ -48,7 +48,7 @@ export default function RootLayout({
           <TooltipProvider>
             {/* <LoadingProvider> */}
             <SolanaProvider>
-              <div className="min-h-screen flex flex-col bg-background">
+              <section className="min-h-screen flex flex-col bg-background">
                 <MainNav />
                 <HeroHighlight containerClassName="min-h-screen">
                   <div className="flex-1 flex pt-16">
@@ -61,7 +61,7 @@ export default function RootLayout({
                 </HeroHighlight>
                 {/* <NotificationService /> */}
                 <Footer />
-              </div>
+              </section>
               <Toaster />
             </SolanaProvider>
             {/* </LoadingProvider> */}
