@@ -46,25 +46,25 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <TooltipProvider>
-            <LoadingProvider>
-              <SolanaProvider>
-                <div className="min-h-screen flex flex-col bg-background">
-                  <MainNav />
-                  <HeroHighlight containerClassName="min-h-screen">
-                    <div className="flex-1 flex pt-16">
-                      {" "}
-                      <CollapsibleSidebar />
-                      <main className="flex justify-center flex-1">
-                        {children}
-                      </main>
-                    </div>
-                  </HeroHighlight>
-                  {/* <NotificationService /> */}
-                  <Footer />
-                </div>
-                <Toaster />
-              </SolanaProvider>
-            </LoadingProvider>
+            {/* <LoadingProvider> */}
+            <SolanaProvider>
+              <div className="min-h-screen flex flex-col bg-background">
+                <MainNav />
+                <HeroHighlight containerClassName="min-h-screen">
+                  <div className="flex-1 flex pt-16">
+                    {" "}
+                    <CollapsibleSidebar />
+                    <main className="flex justify-center flex-1">
+                      {children}
+                    </main>
+                  </div>
+                </HeroHighlight>
+                {/* <NotificationService /> */}
+                <Footer />
+              </div>
+              <Toaster />
+            </SolanaProvider>
+            {/* </LoadingProvider> */}
           </TooltipProvider>
         </ThemeProvider>
       </body>
