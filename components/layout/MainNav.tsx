@@ -118,7 +118,7 @@ export function MainNav() {
             <Button
               variant={pathname === "/elearning" ? "secondary" : "ghost"}
               size="sm"
-              className=" dark:text-gray-200"
+              className="text-gray-900 dark:text-gray-200"
               asChild
             >
               <Link href="/elearning">
@@ -132,7 +132,7 @@ export function MainNav() {
                 pathname === "/elearning/dashboard" ? "secondary" : "ghost"
               }
               size="sm"
-              className=" dark:text-gray-200"
+              className="text-gray-900 dark:text-gray-200"
               asChild
             >
               <Link href="/elearning/dashboard">
@@ -146,7 +146,7 @@ export function MainNav() {
                 pathname === "/elearning/challenges" ? "secondary" : "ghost"
               }
               size="sm"
-              className=" dark:text-gray-200"
+              className="text-gray-900 dark:text-gray-200"
               asChild
             >
               <Link href="/elearning/challenges">
@@ -239,8 +239,7 @@ const WalletMultiButtonDynamic = dynamic(
 function ConnectWalletButton() {
   return (
     <WalletMultiButtonDynamic
-      className="!bg-primary"
-    // className={buttonVariants({ size: "sm" })}
+      className={buttonVariants({ variant: "outline", size: "sm" })}
     />
   );
 }
